@@ -94,3 +94,4 @@ $RECYCLE.BIN/
 .metadata/.plugins/org.eclipse.core.resources/.root/.indexes/history.version
 
 .metadata/.lock
+/bin/
