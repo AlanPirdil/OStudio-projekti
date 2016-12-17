@@ -13,6 +13,7 @@ class Window extends PApplet {
   val areaWidth = 640
   val areaHeight = 320
   var gameScreen = 0
+  var playerIcon = new Player
   //override settings
   def settings() = {
     size(areaWidth,areaHeight)
@@ -25,13 +26,16 @@ class Window extends PApplet {
   }
   
   //gameScreens
+  def playView()={
     fill(255)
+    ellipse(playerIcon.xAxis,playerIcon.yAxis,25,25)
   }
   
   
   //draw
   override def draw(): Unit = {
     if(gameScreen == 0){
+      playView()
     }
 }
   
