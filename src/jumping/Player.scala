@@ -1,7 +1,8 @@
 package jumping
+import processing.core._
 
 class Player {
-  val x = 30          // initial x, doesn't change
-  var y = 250        // initial y, starts from the middle
-  var sos = true
+  val xAxis = 30          // initial x, doesn't change
+  
+  
 }
