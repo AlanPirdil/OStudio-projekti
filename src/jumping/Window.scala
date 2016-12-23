@@ -14,7 +14,7 @@ class Window extends PApplet {
   var pallonsäde = 25
   val areaWidth = 640
   val areaHeight = 320
-  var gameScreen = 0
+  var gameState = 1
   var playerIcon = new Player
   //override settings
   def settings() = {
@@ -23,7 +23,6 @@ class Window extends PApplet {
   //main setup
   override def setup(): Unit = {
     size(areaWidth, areaHeight)
-    frameRate(50)
     background(0)
     noStroke()
   }
@@ -36,15 +35,17 @@ class Window extends PApplet {
   //draw
    var vy = 0
   override def draw(): Unit = {
+   if(gameState == 1) {
     clear()
     fill(255)
     if(playerIcon.xAxis > areaWidth) {
       playerIcon.xAxis = 0
     }
     
-    vy = min(vy + 1, 30)
+    vy = min(vy+1, 20)
     playerIcon.yAxis += vy
     playerIcon.xAxis += 2
     ellipse(playerIcon.xAxis,playerIcon.yAxis,35,35)
     }
+  }
 }
