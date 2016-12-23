@@ -41,9 +41,6 @@ class Window extends PApplet {
     if(playerIcon.xAxis > areaWidth) {
       playerIcon.xAxis = 0
     }
-    if(playerIcon.yAxis == areaHeight) {
-      gameState = 0
-    }
     vy = min(vy+1, 20)
     playerIcon.yAxis += vy
     playerIcon.xAxis += 2
