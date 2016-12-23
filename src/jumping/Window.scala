@@ -32,7 +32,7 @@ class Window extends PApplet {
      vy = -17
    }
   
-  //draw
+  //draw runs 60 time per second
    var vy = 0
   override def draw(): Unit = {
    if(gameState == 1) {
@@ -41,7 +41,9 @@ class Window extends PApplet {
     if(playerIcon.xAxis > areaWidth) {
       playerIcon.xAxis = 0
     }
-    
+    if(playerIcon.yAxis == areaHeight) {
+      gameState = 0
+    }
     vy = min(vy+1, 20)
     playerIcon.yAxis += vy
     playerIcon.xAxis += 2
