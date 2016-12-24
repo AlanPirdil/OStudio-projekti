@@ -15,6 +15,8 @@ class Window extends PApplet {
   val areaWidth = 640
   val areaHeight = 320
   var gameState = 1
+  val bgImg = loadImage("src/jumping/BG.png")
+  val trumpImg = loadImage("src/jumping/trump.png")
   var playerIcon = new Player
   //override settings
   def settings() = {
@@ -28,8 +30,8 @@ class Window extends PApplet {
   }
 
   
-  override def mousePressed() = {
-     vy = -17
+  override def mousePressed() = { //Change to when in contact with platform
+     vy = -15
    }
   
   //draw
@@ -43,9 +45,10 @@ class Window extends PApplet {
     }
     
     vy = min(vy+1, 20)
-    playerIcon.yAxis += vy
-    playerIcon.xAxis += 2
-    ellipse(playerIcon.xAxis,playerIcon.yAxis,35,35)
+    playerIcon.yAxis = min(250,playerIcon.yAxis + vy)
+    playerIcon.xAxis += 0
+    image(bgImg, 0,0,640,320)
+    image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
     }
   }
 }
