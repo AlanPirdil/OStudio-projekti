@@ -1,6 +1,7 @@
 package jumping
 import scala.math._
 import processing.core._
+import ddf.minim._
 import scala.collection.mutable.Buffer
 
 object Window extends PApplet{
@@ -33,6 +34,8 @@ class Window extends PApplet {
     size(areaWidth, areaHeight)
     background(bgImg)
     noStroke()
+    
+    
   }
 
   
