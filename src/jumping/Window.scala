@@ -25,6 +25,8 @@ class Window extends PApplet {
   val sounds = new Music // Initiate the music
   val trumpImg = loadImage(playerIcon.img) // Load the player-icon
   val obstacles = Buffer[Obstacle](new Obstacle(playerIcon.xAxis, 250, 1)) // Create a buffer for obstacles
+  val wallImgTest = loadImage("src/jumping/wall.png")
+
 
   
   //Main setup
@@ -72,7 +74,8 @@ class Window extends PApplet {
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
     
    //TESTIKUUTIO
-    rect(obstacles(0).x+200-sx,obstacles(0).y,50,50)
+    rect(obstacles(0).x + 200 - sx,obstacles(0).y, 50, 50)
+    image(wallImgTest, obstacles(0).x + 200 - sx, 250, 50, 50)
     sx += 2
   }
     
