@@ -60,8 +60,8 @@ class Window extends PApplet {
   override def draw(): Unit = {
      
    if(gameState == 1) gameScreen
-    else if(gameState == 2) mainMenu
-    else if(gameState == 3) helpScreen
+   else if(gameState == 2) mainMenu
+   else if(gameState == 3) helpScreen
   }
 
   var sx = 0
