@@ -17,7 +17,9 @@ class Window extends PApplet {
   val areaWidth = 640
   val areaHeight = 320
   
-  var gameState = 1
+  var gameState = 2
+  
+  def situation = this.gameState
   
   val bgImg = loadImage("src/jumping/BG.png") // Load the background image
   val blurredBg = loadImage("src/jumping/blurredBg.png")
@@ -70,6 +72,9 @@ class Window extends PApplet {
   private def gameScreen = {
     clear()
     background(bgImg)
+    textSize(20)
+    fill(255, 15, 15)
+    text("Your Score: " + millis() / 100 , 250, 40)
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
     
@@ -82,7 +87,7 @@ class Window extends PApplet {
       playerIcon.vy = 0
       if(mousePressed) playerIcon.vy = -15
       playerIcon.yAxis = obstacles(0).y - 51
-    }
+    }     
   }
     
   private def isOnTop: Boolean = {
@@ -97,7 +102,7 @@ class Window extends PApplet {
     fill(0,0,0)
     text("Help", 100, 100)
     
-    val helperText = "Press space to jump\nPress m to go to the main menu\n Press s to mute the soundtrack\n Press e to mute sound effects"
+    val helperText = "Press space to jump\nPress m to go to the main menu\nPress s to mute the soundtrack\nPress e to mute sound effects"
     textSize(20)
     text(helperText, 100, 150)
   }
@@ -109,7 +114,7 @@ class Window extends PApplet {
     fill(0,0,0)
     text("Trumpoliini", 100, 100)
     
-    val instructionText = "Crooked Hillary is chasing you.\nYou must escape her to Mexico by jumping\n over the wall you built.\n Press space to jump\nPress h to get help"
+    val instructionText = "Crooked Hillary is chasing you.\nYou must escape her to Mexico by jumping\nover the wall you built.\nPress space to jump\nPress h to get help"
     textSize(20)
     text(instructionText, 100, 150)
   }
