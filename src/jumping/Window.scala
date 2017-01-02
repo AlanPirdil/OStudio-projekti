@@ -5,6 +5,7 @@ import ddf.minim._
 import scala.collection.mutable.Buffer
 
 object Window extends PApplet{
+  
   def main(args:Array[String]) {
     PApplet.main(Array[String]("jumping.Window"))
   }
@@ -13,42 +14,35 @@ object Window extends PApplet{
 
 class Window extends PApplet {
   // useful variables
-  var music = new Minim(this)
-  var pallonsäde = 25
   val areaWidth = 640
   val areaHeight = 320
+  
   var gameState = 1
-  val bgImg = loadImage("src/jumping/BG.png")
-  val trumpImg = loadImage("src/jumping/trump.png")
-  var playerIcon = new Player
-  val obstacles = Buffer[Obstacle]()
-  val wallImgTest = loadImage("src/jumping/wall.png")
   
-  //override settings
-  def settings() = {
-    size(areaWidth,areaHeight)
-  }
+  val bgImg = loadImage("src/jumping/BG.png") // Load the background image
+  val playerIcon = new Player // Initiate a player
+  val sounds = new Music // Initiate the music
+  val trumpImg = loadImage(playerIcon.img) // Load the player-icon
+  val obstacles = Buffer[Obstacle](new Obstacle(playerIcon.xAxis, 250, 1)) // Create a buffer for obstacles
+
   
   
-  //main setup
+  
+  //Main setup
   override def setup(): Unit = {
-    
-    var song = music.loadFile("src/jumping/alone.wav")
-    song.play()
-    obstacles += new Obstacle(playerIcon.xAxis, 250, "Square")
-    size(areaWidth, areaHeight)
-    background(bgImg)
-    noStroke()
-    
+     sounds.musicSetup()
+     size(areaWidth, areaHeight)
+     noStroke()
     
   }
 
   
-  override def mousePressed() = { //Change to when in contact with platform
-    if(vy == 20) {
-     vy = -15
+  override def mousePressed() = { //What happens when mouse is clicked
+    if(playerIcon.vy == 20) { // Checks if Trump is on the ground
+     playerIcon.vy = -15 // Makes Trump jump
     }
    }
+  
   
   
   //draw runs 60 time per second
@@ -57,33 +51,15 @@ class Window extends PApplet {
   override def draw(): Unit = {
      
    if(gameState == 1) {
-    clear() 
-    vy = min(vy+1, 20)
-    playerIcon.yAxis = min(250,playerIcon.yAxis + vy)
-    
-    while (playerIcon.xAxis >= obstacles(0).x+200-sx - 25 && playerIcon.xAxis <= obstacles(0).x+200-sx + 25) {
-      playerIcon.yAxis == 300
-      playerIcon.xAxis += 1
-    }
-   
-    playerIcon.xAxis += 0
-    image(bgImg, 0,0,640,320)
+    clear()
+    background(bgImg)
+    playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
     
     
    //TESTIKUUTIO
     rect(obstacles(0).x+200-sx,obstacles(0).y,50,50)
-    image(wallImgTest, obstacles(0).x+200-sx,250, 50, 50)
     sx += 2
-    if(obstacles(0).x+200-sx-50 == playerIcon.xAxis && obstacles(0).y == playerIcon.yAxis) gameState = 0
-
-    }
-   
-   if(gameState == 2){
-     clear()
-     image(bgImg, 0, 0, 640, 320)
-     textSize(32);
-     text("Main Menu", 10, 30);
    }
   }
 }
