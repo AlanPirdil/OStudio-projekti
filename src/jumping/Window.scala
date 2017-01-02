@@ -13,6 +13,7 @@ object Window extends PApplet{
 
 class Window extends PApplet {
   // useful variables
+  var music = new Minim(this)
   var pallonsäde = 25
   val areaWidth = 640
   val areaHeight = 320
@@ -31,6 +32,10 @@ class Window extends PApplet {
   
   //main setup
   override def setup(): Unit = {
+    
+    var song = music.loadFile("src/jumping/alone.wav")
+    song.play()
+    
     size(areaWidth, areaHeight)
     background(bgImg)
     noStroke()
@@ -57,15 +62,15 @@ class Window extends PApplet {
     playerIcon.yAxis = min(250,playerIcon.yAxis + vy)
    
     playerIcon.xAxis += 0
-   // image(bgImg, 0,0,640,320)
+    image(bgImg, 0,0,640,320)
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
     
     
-    //TESTIKUUTIO
+   /* //TESTIKUUTIO
     rect(obstacles(0).x+200-sx,obstacles(0).y,50,50)
     sx += 2
     if(obstacles(0).x+200-sx == playerIcon.xAxis && obstacles(0).y == playerIcon.yAxis) gameState = 0
-
+*/
     }
   }
 }
