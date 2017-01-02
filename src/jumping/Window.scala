@@ -67,6 +67,8 @@ class Window extends PApplet {
    if(gameState == 2){
      clear()
      image(bgImg, 0, 0, 640, 320)
+     textSize(32);
+     text("Main Menu", 10, 30);
    }
   }
 }
