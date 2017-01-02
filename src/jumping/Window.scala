@@ -50,7 +50,7 @@ class Window extends PApplet {
   }
   
   override def mousePressed() = { //What happens when mouse is clicked
-    if(playerIcon.vy == 20) { // Checks if Trump is on the ground
+    if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
      playerIcon.vy = -15 // Makes Trump jump
     }
   }
@@ -78,24 +78,23 @@ class Window extends PApplet {
     image(wallImgTest, obstacles(0).x + 200 - sx, 250, 50, 50)
     sx += 2
     
-    var currentX = obstacles(0).x + 200 - sx
-    var onTop = playerIcon.xAxis + 50 > currentX && playerIcon.yAxis + 50 == obstacles(0).y && playerIcon.xAxis < currentX + 50
-    
-    if (onTop) {
+    if (isOnTop) {
       playerIcon.vy = 0
+      if(mousePressed) playerIcon.vy = -15
       playerIcon.yAxis = obstacles(0).y - 51
-      
-    } else {
-      println("failed")
     }
   }
     
+  private def isOnTop: Boolean = {
+    var currentX = obstacles(0).x + 200 - sx
+    playerIcon.xAxis + 50 > currentX && playerIcon.yAxis + 50 == obstacles(0).y && playerIcon.xAxis < currentX + 50
+  }
    
   private def helpScreen = {
     clear()
     background(blurredBg)
     textSize(60)
-    //fill(0,0,0)
+    fill(0,0,0)
     text("Help", 100, 100)
     
     val helperText = "Press space to jump\nPress m to go to the main menu\n Press s to mute the soundtrack\n Press e to mute sound effects"
@@ -107,7 +106,7 @@ class Window extends PApplet {
     clear()
     background(blurredBg)
     textSize(60)
-    //fill(0,0,0)
+    fill(0,0,0)
     text("Trumpoliini", 100, 100)
     
     val instructionText = "Crooked Hillary is chasing you.\nYou must escape her to Mexico by jumping\n over the wall you built.\n Press space to jump\nPress h to get help"
