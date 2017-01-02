@@ -17,12 +17,12 @@ class Window extends PApplet {
   var pallonsäde = 25
   val areaWidth = 640
   val areaHeight = 320
-  var gameState = 2
+  var gameState = 1
   val bgImg = loadImage("src/jumping/BG.png")
   val trumpImg = loadImage("src/jumping/trump.png")
   var playerIcon = new Player
   val obstacles = Buffer[Obstacle]()
- 
+  val wallImgTest = loadImage("src/jumping/wall.png")
   
   //override settings
   def settings() = {
@@ -35,7 +35,7 @@ class Window extends PApplet {
     
     var song = music.loadFile("src/jumping/alone.wav")
     song.play()
-    
+    obstacles += new Obstacle(playerIcon.xAxis, 250, "Square")
     size(areaWidth, areaHeight)
     background(bgImg)
     noStroke()
@@ -60,18 +60,23 @@ class Window extends PApplet {
     clear() 
     vy = min(vy+1, 20)
     playerIcon.yAxis = min(250,playerIcon.yAxis + vy)
+    
+    while (playerIcon.xAxis >= obstacles(0).x+200-sx - 25 && playerIcon.xAxis <= obstacles(0).x+200-sx + 25) {
+      playerIcon.yAxis == 300
+      playerIcon.xAxis += 1
+    }
    
     playerIcon.xAxis += 0
     image(bgImg, 0,0,640,320)
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
     
     
-   /* //TESTIKUUTIO
+   //TESTIKUUTIO
     rect(obstacles(0).x+200-sx,obstacles(0).y,50,50)
+    image(wallImgTest, obstacles(0).x+200-sx,250, 50, 50)
     sx += 2
-    if(obstacles(0).x+200-sx == playerIcon.xAxis && obstacles(0).y == playerIcon.yAxis) gameState = 0
+    if(obstacles(0).x+200-sx-50 == playerIcon.xAxis && obstacles(0).y == playerIcon.yAxis) gameState = 0
 
-*/
     }
    
    if(gameState == 2){
