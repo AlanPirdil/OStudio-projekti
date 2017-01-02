@@ -15,7 +15,7 @@ class Window extends PApplet {
   var pallonsäde = 25
   val areaWidth = 640
   val areaHeight = 320
-  var gameState = 1
+  var gameState = 2
   val bgImg = loadImage("src/jumping/BG.png")
   val trumpImg = loadImage("src/jumping/trump.png")
   var playerIcon = new Player
@@ -62,7 +62,11 @@ class Window extends PApplet {
     rect(obstacles(0).x+200-sx,obstacles(0).y,50,50)
     sx += 2
     if(obstacles(0).x+200-sx == playerIcon.xAxis && obstacles(0).y == playerIcon.yAxis) gameState = 0
-
     }
+   
+   if(gameState == 2){
+     clear()
+     image(bgImg, 0, 0, 640, 320)
+   }
   }
 }
