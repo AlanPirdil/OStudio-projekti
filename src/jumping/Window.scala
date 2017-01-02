@@ -77,6 +77,17 @@ class Window extends PApplet {
     rect(obstacles(0).x + 200 - sx,obstacles(0).y, 50, 50)
     image(wallImgTest, obstacles(0).x + 200 - sx, 250, 50, 50)
     sx += 2
+    
+    var currentX = obstacles(0).x + 200 - sx
+    var onTop = playerIcon.xAxis + 50 > currentX && playerIcon.yAxis + 50 == obstacles(0).y && playerIcon.xAxis < currentX + 50
+    
+    if (onTop) {
+      playerIcon.vy = 0
+      playerIcon.yAxis = obstacles(0).y - 51
+      
+    } else {
+      println("failed")
+    }
   }
     
    
