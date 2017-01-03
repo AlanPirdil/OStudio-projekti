@@ -29,7 +29,9 @@ class Window extends PApplet {
   val obstacles = Buffer[Obstacle](new Obstacle(playerIcon.xAxis, 250, 50, 50))
   val wallImgTest = loadImage("src/jumping/wall.png")
   val firstX = playerIcon.xAxis
+  var obsCount = 0 
   obstacles += new Obstacle(firstX + 500, 250, 50, 50)
+
    
 
   
@@ -100,16 +102,23 @@ class Window extends PApplet {
     }
     }
     
+    
     if (isOnTop) {
       playerIcon.vy = 0
       if(mousePressed) playerIcon.vy = -15
-      playerIcon.yAxis = obstacles(0).y - 51
-    }  
-  }
+      playerIcon.yAxis = obstacles(obsCount).y - 51
+    }
     
+    if (playerIcon.xAxis > obstacles(obsCount).x + 200 - sx + 50) {
+      if (obstacles.length > obsCount + 1)
+        obsCount += 1
+    }
+    
+   
+  }
   private def isOnTop: Boolean = {
-    var currentX = obstacles(0).x + 200  - sx
-    playerIcon.xAxis + 50 > currentX && playerIcon.yAxis + 50 == obstacles(0).y && playerIcon.xAxis < currentX + 50
+    var currentX = obstacles(obsCount).x + 200  - sx
+    playerIcon.xAxis + 50 > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 50
   }
    
   private def helpScreen = {
