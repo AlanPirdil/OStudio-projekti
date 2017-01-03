@@ -11,10 +11,5 @@ class Obstacle (var x: Int, var y: Int, val kanta: Int, val korkeus: Int) {
   
   def lastY = this.y + korkeus
 
-  def show = {
-    ???
-  }
-  
-
 }
 
