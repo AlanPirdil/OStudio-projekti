@@ -12,6 +12,6 @@ class Player {
   
   def jump() = {    
     vy = min(vy+1, 20)   // jump
-    this.yAxis = min(250,this.yAxis + vy) //Floor level
+    this.yAxis = min(250,this.yAxis + vy) //Floor and roof level
   }
 }

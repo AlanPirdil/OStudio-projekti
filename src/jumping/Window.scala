@@ -26,7 +26,7 @@ class Window extends PApplet {
   val playerIcon = new Player // Initiate a player
   val sounds = new Music // Initiate the music
   val trumpImg = loadImage(playerIcon.img) // Load the player-icon
-  val obstacles = Buffer[Obstacle](new Obstacle(playerIcon.xAxis, 250, 1)) // Create a buffer for obstacles
+  val obstacles = Buffer[Obstacle](new Obstacle(playerIcon.xAxis, 250, 50, 50)) // Create a buffer for obstacles
   val wallImgTest = loadImage("src/jumping/wall.png")
 
 
@@ -68,10 +68,19 @@ class Window extends PApplet {
    else if(gameState == 3) helpScreen
   }
 
+  var screenSpeed = playerIcon.xAxis
   var sx = 0
+  
   private def gameScreen = {
     clear()
-    background(bgImg)
+    
+    image(bgImg, screenSpeed, 0)
+    image(bgImg, screenSpeed - areaWidth, 0)
+    image(bgImg, screenSpeed + areaWidth, 0)
+    screenSpeed -= 2
+    if(abs(screenSpeed) > areaWidth) screenSpeed= 0
+    
+    
     textSize(20)
     fill(255, 15, 15)
     text("Your Score: " + millis() / 100 , 250, 40)
@@ -87,11 +96,11 @@ class Window extends PApplet {
       playerIcon.vy = 0
       if(mousePressed) playerIcon.vy = -15
       playerIcon.yAxis = obstacles(0).y - 51
-    }     
+    }  
   }
     
   private def isOnTop: Boolean = {
-    var currentX = obstacles(0).x + 200 - sx
+    var currentX = obstacles(0).x + 200  - sx
     playerIcon.xAxis + 50 > currentX && playerIcon.yAxis + 50 == obstacles(0).y && playerIcon.xAxis < currentX + 50
   }
    

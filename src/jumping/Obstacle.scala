@@ -1,10 +1,19 @@
 package jumping
 import processing.core._
 
-class Obstacle(var x: Int, var y: Int, val shape: Int) {
+class Obstacle (var x: Int, var y: Int, val kanta: Int, val korkeus: Int) {
   
-  var sx = 0
+  def topX = this.x
+  
+  def firstY = this.y
+  
+  def botX = this.x + kanta
+  
+  def lastY = this.y + korkeus
 
+  def show = {
+    ???
+  }
   
 
 }
