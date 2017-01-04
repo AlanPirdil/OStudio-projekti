@@ -127,22 +127,25 @@ class Window extends PApplet {
     }
     
     if (isOnTop) {
+      println("Now on top")
       playerIcon.vy = 0
-      if(mousePressed) playerIcon.vy = -15
       playerIcon.yAxis = obstacles(obsCount).y - 41
+      if(mousePressed) playerIcon.vy = -15
     }
     
     if (playerIcon.xAxis > obstacles(obsCount).x - gameSpeed + 30) {
       if (obstacles.length > obsCount + 1)
         obsCount += 1
-    }
-    
-   
+    }   
   }
+  
   private def isOnTop: Boolean = {
     var currentX = obstacles(obsCount).x - gameSpeed
-    println("nykyinenX:" + currentX + "pleijeriX" + playerIcon.xAxis)
-    playerIcon.xAxis + 30 > currentX && playerIcon.yAxis + 30 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
+    var testi =  playerIcon.xAxis + 30
+    var testi2 = currentX + 30
+    println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 30 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
+    println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 30) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
+    playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 30 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
   }
      
      
