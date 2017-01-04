@@ -3,6 +3,7 @@ import scala.math._
 import processing.core._
 import ddf.minim._
 import scala.collection.mutable.Buffer
+import scala.io.Source
 
 object Window extends PApplet{
   
@@ -26,13 +27,30 @@ class Window extends PApplet {
   val playerIcon = new Player // Initiate a player
   val sounds = new Music // Initiate the music
   val trumpImg = loadImage(playerIcon.img) // Load the player-icon
-  val obstacles = Buffer[Obstacle](new Obstacle(playerIcon.xAxis, 250, 50, 50))
+  val obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
   val wallImgTest = loadImage("src/jumping/wall.png")
+  val level1 = Source.fromFile("src/jumping/lvl1.csv")
   val firstX = playerIcon.xAxis
   var obsCount = 0 
-  obstacles += new Obstacle(firstX + 500, 250, 50, 50)
+  //obstacles += new Obstacle(firstX + 500, 250, 50, 50)
 
-   
+  try {
+    var rivinumero = 1
+    for (rivi <- level1.getLines) {
+      val aabel = rivi.split(",")
+      val baabel = aabel.map(_.toInt)
+      val koko = baabel.size
+      for(i<- 0 until koko){
+        if(baabel(i) == 0){
+          obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 70,30,30)
+        }
+      }
+      rivinumero += 1
+    }
+ 
+  } finally {
+    level1.close()
+  }
 
   
   //Main setup
@@ -51,6 +69,11 @@ class Window extends PApplet {
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
+      }
+       else if(key == ' ') {
+       if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
+       playerIcon.vy = -15 // Makes Trump jump
+        }        
       }
     }
   }
@@ -96,10 +119,10 @@ class Window extends PApplet {
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
       var index = obstacles.indexOf(thisObs)
-      rect(obstacles(index).x + 200 - sx,obstacles(index).y, 50, 50)
-      image(wallImgTest, obstacles(index).x + 200 - sx, 250, 50, 50)
-      sx += 2
+      image(wallImgTest, obstacles(index).x - sx, obstacles(index).y, 50, 50)
+      
     }
+      sx += 1
     }
     
     
