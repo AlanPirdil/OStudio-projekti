@@ -32,6 +32,7 @@ class Window extends PApplet {
   val level1 = Source.fromFile("src/jumping/lvl1.csv")
   val firstX = playerIcon.xAxis
   var obsCount = 0 
+  var onTop: Boolean = false
   //obstacles += new Obstacle(firstX + 500, 250, 50, 50)
 
   try {
@@ -42,7 +43,7 @@ class Window extends PApplet {
       val koko = baabel.size
       for(i<- 0 until koko){
         if(baabel(i) == 0){
-          obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 70,30,30)
+          obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 86,30,30)
         }
       }
       rivinumero += 1
@@ -58,7 +59,7 @@ class Window extends PApplet {
      sounds.musicPlay()
      size(areaWidth, areaHeight)
      noStroke()
-    
+     frameRate(45)
   }
 
   override def keyPressed() = {
@@ -69,11 +70,10 @@ class Window extends PApplet {
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
-      }
-       else if(key == ' ') {
-       if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
-       playerIcon.vy = -15 // Makes Trump jump
-        }        
+      } else if(key == ' '){
+            if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
+               playerIcon.vy = -15 // Makes Trump jump
+              }
       }
     }
   }
@@ -97,8 +97,8 @@ class Window extends PApplet {
 
   var screenSpeed = playerIcon.xAxis
   var sx = 0
-  
-  private def gameScreen = {
+  var gameSpeed = 0
+  def gameScreen = {
     clear()
     
     image(bgImg, screenSpeed, 0)
@@ -106,7 +106,7 @@ class Window extends PApplet {
     image(bgImg, screenSpeed + areaWidth, 0)
     screenSpeed -= 2
     if(abs(screenSpeed) > areaWidth) screenSpeed= 0
-    
+    sx += 2
     
     textSize(20)
     fill(255, 15, 15)
@@ -115,24 +115,22 @@ class Window extends PApplet {
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
     
    //TESTIKUUTIO
-    
+    var gameSpeed = 0
+    gameSpeed += 2
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
-      var index = obstacles.indexOf(thisObs)
-      image(wallImgTest, obstacles(index).x - sx, obstacles(index).y, 50, 50)
-      
+      thisObs.x = thisObs.x - gameSpeed
+      image(wallImgTest, thisObs.x, thisObs.y, 30, 30)
+      }
     }
-      sx += 1
-    }
-    
     
     if (isOnTop) {
       playerIcon.vy = 0
       if(mousePressed) playerIcon.vy = -15
-      playerIcon.yAxis = obstacles(obsCount).y - 51
+      playerIcon.yAxis = obstacles(obsCount).y - 41
     }
     
-    if (playerIcon.xAxis > obstacles(obsCount).x + 200 - sx + 50) {
+    if (playerIcon.xAxis > obstacles(obsCount).x - gameSpeed + 30) {
       if (obstacles.length > obsCount + 1)
         obsCount += 1
     }
@@ -140,9 +138,15 @@ class Window extends PApplet {
    
   }
   private def isOnTop: Boolean = {
-    var currentX = obstacles(obsCount).x + 200  - sx
-    playerIcon.xAxis + 50 > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 50
+    var currentX = obstacles(obsCount).x - gameSpeed
+    println("nykyinenX:" + currentX + "pleijeriX" + playerIcon.xAxis)
+    playerIcon.xAxis + 30 > currentX && playerIcon.yAxis + 30 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
   }
+     
+     
+//     Make Trump jump
+     
+ //END OF gameScreen
    
   private def helpScreen = {
     clear()
