@@ -35,15 +35,16 @@ class Window extends PApplet {
   var onTop: Boolean = false
   //obstacles += new Obstacle(firstX + 500, 250, 50, 50)
 
-  try {
-    var rivinumero = 1
-    for (rivi <- level1.getLines) {
-      val aabel = rivi.split(",")
-      val baabel = aabel.map(_.toInt)
-      val koko = baabel.size
-      for(i<- 0 until koko){
-        if(baabel(i) == 0){
-          obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 86,30,30)
+  private def readLevel() = {
+    try {
+      var rivinumero = 1
+      for (rivi <- level1.getLines) {
+        val aabel = rivi.split(",")
+        val baabel = aabel.map(_.toInt)
+        val koko = baabel.size
+        for(i<- 0 until koko){
+          if(baabel(i) == 0){
+            obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 86,30,30)
         }
       }
       rivinumero += 1
@@ -52,13 +53,14 @@ class Window extends PApplet {
   } finally {
     level1.close()
   }
-
+ }
   
   //Main setup
   override def setup(): Unit = {
      sounds.musicPlay()
      size(areaWidth, areaHeight)
      noStroke()
+     readLevel()
      frameRate(45)
   }
 
