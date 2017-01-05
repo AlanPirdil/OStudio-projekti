@@ -141,15 +141,31 @@ class Window extends PApplet {
       if (obstacles.length > obsCount + 1)
         obsCount += 1
     }   
+    
+    
+    if (gameEnds) gameState = 2
+    
   }
   
-  private def isOnTop: Boolean = {
+   private def isOnTop: Boolean = {
     var currentX = obstacles(obsCount).x - gameSpeed
+    //ONLY FOR TESTING PURPOSES:
     var testi =  playerIcon.xAxis + 30
     var testi2 = currentX + 30
+    println(gameEnds)
     println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
     println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 50) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
-    playerIcon.xAxis + 30  > currentX &&playerIcon.yAxis + 50 > obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
+    //THIS, HOWEVER, IS RELEVANT:
+    playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 > obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
+  }
+  
+  //CHECKS IF THE PLAYER "COLLIDES" W/ THE WALL
+  private def gameEnds: Boolean = {
+    if (playerIcon.xAxis + 30 == obstacles(obsCount).x - gameSpeed && playerIcon.yAxis + 50 > obstacles(obsCount).y) {
+      true
+    } else {
+      false
+    }
   }
 
      
