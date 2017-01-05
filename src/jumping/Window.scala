@@ -41,8 +41,9 @@ class Window extends PApplet {
       var rivinumero = 1
       for (rivi <- level1.getLines) {
         val arrayOfStrings = rivi.split(",")
-        val arrayOfInts = arrayOfStrings.map(_.toInt)
+        val arrayOfInts = arrayOfStrings.map(_.trim().toInt)
         val koko = arrayOfInts.size
+        println(arrayOfInts(1))
         for(i<- 0 until koko){
           if(arrayOfInts(i) == 0){
             obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 86,30,30)
@@ -110,7 +111,7 @@ class Window extends PApplet {
   
   def gameScreen = {
     clear()
-    
+    var nextObstacle = obstacles(obsCount)
     image(bgImg, screenSpeed, 0)
     image(bgImg, screenSpeed - areaWidth, 0)
     image(bgImg, screenSpeed + areaWidth, 0)
@@ -122,11 +123,11 @@ class Window extends PApplet {
     fill(255, 15, 15)
     text("Your Score: " + millis() / 100 , 250, 40)
     playerIcon.jump()
-    image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, 50, 50)
+    image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
     
    //TESTIKUUTIO
     var gameSpeed = 0
-    gameSpeed += 2
+    gameSpeed += 4
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
       thisObs.x = thisObs.x - gameSpeed
@@ -137,7 +138,7 @@ class Window extends PApplet {
     if (isOnTop) {
       println("Now on top")
       playerIcon.vy = 0
-      playerIcon.yAxis = obstacles(obsCount).y - 50
+      playerIcon.yAxis = obstacles(obsCount).y - playerIcon.height
       println( playerIcon.yAxis + " ja toinen arvo on" + obstacles(obsCount).y)
       if(mousePressed) playerIcon.vy = -15
     }
@@ -161,12 +162,12 @@ class Window extends PApplet {
    // println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
    // println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 50) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
     //THIS, HOWEVER, IS RELEVANT:
-    playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 > obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
+    playerIcon.xAxis + obstacles(obsCount).kanta > currentX && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y && playerIcon.xAxis < currentX + obstacles(obsCount).kanta
   }
   
   //CHECKS IF THE PLAYER "COLLIDES" W/ THE WALL
   private def gameEnds: Boolean = {
-    if (playerIcon.xAxis + 30 == obstacles(obsCount).x - gameSpeed && playerIcon.yAxis + 50 > obstacles(obsCount).y) {
+    if (playerIcon.xAxis + obstacles(obsCount).kanta == obstacles(obsCount).x - gameSpeed && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y) {
       true
     } else {
       false
