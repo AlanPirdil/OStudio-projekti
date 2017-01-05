@@ -50,7 +50,10 @@ class Window extends PApplet {
       rivinumero += 1
     }
  
-  } finally {
+  }      catch {
+        case e: Exception => "juu" 
+      }
+    finally {
     level1.close()
   }
  }
@@ -139,20 +142,16 @@ class Window extends PApplet {
         obsCount += 1
     }   
   }
-  var previousY = 0
+  
   private def isOnTop: Boolean = {
     var currentX = obstacles(obsCount).x - gameSpeed
     var testi =  playerIcon.xAxis + 30
     var testi2 = currentX + 30
     println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
     println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 50) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
-    playerIcon.xAxis + 30  > currentX &&(this.crossedY(previousY, playerIcon.yAxis) || playerIcon.yAxis + 50 == obstacles(obsCount).y) && playerIcon.xAxis < currentX + 30
+    playerIcon.xAxis + 30  > currentX &&playerIcon.yAxis + 50 > obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
   }
-  
-  def crossedY(prev:Int, now: Int): Boolean = {
-    prev + 50  < obstacles(obsCount).y && now + 50 > obstacles(obsCount).y
-  }
-  previousY = playerIcon.yAxis
+
      
 //     Make Trump jump
      
