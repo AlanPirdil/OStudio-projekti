@@ -39,11 +39,11 @@ class Window extends PApplet {
     try {
       var rivinumero = 1
       for (rivi <- level1.getLines) {
-        val aabel = rivi.split(",")
-        val baabel = aabel.map(_.toInt)
-        val koko = baabel.size
+        val arrayOfStrings = rivi.split(",")
+        val arrayOfInts = arrayOfStrings.map(_.toInt)
+        val koko = arrayOfInts.size
         for(i<- 0 until koko){
-          if(baabel(i) == 0){
+          if(arrayOfInts(i) == 0){
             obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 86,30,30)
         }
       }
@@ -129,7 +129,8 @@ class Window extends PApplet {
     if (isOnTop) {
       println("Now on top")
       playerIcon.vy = 0
-      playerIcon.yAxis = obstacles(obsCount).y - 41
+      playerIcon.yAxis = obstacles(obsCount).y - 50
+      println( playerIcon.yAxis + " ja toinen arvo on" + obstacles(obsCount).y)
       if(mousePressed) playerIcon.vy = -15
     }
     
@@ -138,16 +139,20 @@ class Window extends PApplet {
         obsCount += 1
     }   
   }
-  
+  var previousY = 0
   private def isOnTop: Boolean = {
     var currentX = obstacles(obsCount).x - gameSpeed
     var testi =  playerIcon.xAxis + 30
     var testi2 = currentX + 30
-    println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 30 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
-    println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 30) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
-    playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 30 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
+    println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
+    println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 50) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
+    playerIcon.xAxis + 30  > currentX &&(this.crossedY(previousY, playerIcon.yAxis) || playerIcon.yAxis + 50 == obstacles(obsCount).y) && playerIcon.xAxis < currentX + 30
   }
-     
+  
+  def crossedY(prev:Int, now: Int): Boolean = {
+    prev + 50  < obstacles(obsCount).y && now + 50 > obstacles(obsCount).y
+  }
+  previousY = playerIcon.yAxis
      
 //     Make Trump jump
      
