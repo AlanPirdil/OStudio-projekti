@@ -24,6 +24,7 @@ class Window extends PApplet {
   
   val bgImg = loadImage("src/jumping/BG.png") // Load the background image
   val blurredBg = loadImage("src/jumping/blurredBg.png")
+  val effects = new SoundEffects
   val playerIcon = new Player // Initiate a player
   val sounds = new Music // Initiate the music
   val trumpImg = loadImage(playerIcon.img) // Load the player-icon
@@ -84,6 +85,8 @@ class Window extends PApplet {
   }
   
   override def mousePressed() = { //What happens when mouse is clicked
+    effects.rewind1()
+    effects.play1()
     if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
      playerIcon.vy = -15 // Makes Trump jump
     }
@@ -103,6 +106,8 @@ class Window extends PApplet {
   var screenSpeed = playerIcon.xAxis
   var sx = 0
   var gameSpeed = 0
+  
+  
   def gameScreen = {
     clear()
     
@@ -152,9 +157,9 @@ class Window extends PApplet {
     //ONLY FOR TESTING PURPOSES:
     var testi =  playerIcon.xAxis + 30
     var testi2 = currentX + 30
-    println(gameEnds)
-    println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
-    println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 50) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
+   // println(gameEnds)
+   // println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
+   // println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 50) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
     //THIS, HOWEVER, IS RELEVANT:
     playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 > obstacles(obsCount).y && playerIcon.xAxis < currentX + 30
   }

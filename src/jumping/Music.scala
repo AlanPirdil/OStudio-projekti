@@ -7,7 +7,6 @@ class Music {
   val song1 = music.loadFile("src/jumping/alone.wav")
   var currentSong = song1
   
-  
   def musicPlay() = currentSong.play()
   
   def isPaused = !currentSong.isPlaying()
@@ -15,4 +14,8 @@ class Music {
   def isMuted = currentSong.isMuted()
   
   def pause() = currentSong.pause()
+  
+  def mute() = currentSong.mute()
+  
+  def unmute() = currentSong.unmute()
 }
