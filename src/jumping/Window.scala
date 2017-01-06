@@ -105,6 +105,7 @@ class Window extends PApplet {
    if(gameState == 1) gameScreen
    else if(gameState == 2) mainMenu
    else if(gameState == 3) helpScreen
+   else if(gameState == 4) endScreen
   }
 
   var screenSpeed = playerIcon.xAxis
@@ -149,7 +150,7 @@ class Window extends PApplet {
       println( playerIcon.yAxis + " ja toinen arvo on" + obstacles(obsCount).y)
       if(mousePressed) playerIcon.vy = -15
     } else if(isOnTop && obstacles(obsCount).obsType == "spikes"){
-      gameState = 2
+      gameState = 4
     }
     
     if (playerIcon.xAxis > obstacles(obsCount).x - gameSpeed + 30) {
@@ -158,7 +159,7 @@ class Window extends PApplet {
     }   
     
     
-    if (gameEnds) gameState = 2
+    if (gameEnds) gameState = 4
     
   }
   
@@ -210,5 +211,17 @@ class Window extends PApplet {
     val instructionText = "Crooked Hillary is chasing you.\nYou must escape her to Mexico by jumping\nover the wall you built.\nPress space to jump\nPress h to get help"
     textSize(20)
     text(instructionText, 100, 150)
+  }
+    private def endScreen = {
+    clear()
+    background(blurredBg)
+    textSize(60)
+    fill(0,0,0)
+    text("GAME OVER", 100, 100)
+    
+    val deathDeclaration = "You didn't survive to Mexico.\nCrooked Hillary put you to jail but Soon(tm)\nyou will get your revenge."
+    textSize(20)
+    text(deathDeclaration, 100, 150)
+    text("Your score:", 100, 250)
   }
 }
