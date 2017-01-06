@@ -28,7 +28,7 @@ class Window extends PApplet {
   val playerIcon = new Player // Initiate a player
   val sounds = new Music // Initiate the music
   val trumpImg = loadImage(playerIcon.img) // Load the player-icon
-  val obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
+  var obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
   val wallImgTest = loadImage("src/jumping/wall.png")
   val level1 = Source.fromFile("src/jumping/lvl1.csv")
   val firstX = playerIcon.xAxis
@@ -110,7 +110,7 @@ class Window extends PApplet {
   
   
   def gameScreen = {
-    clear()
+    obstacles = obstacles.sortBy { _.x}
     var nextObstacle = obstacles(obsCount)
     image(bgImg, screenSpeed, 0)
     image(bgImg, screenSpeed - areaWidth, 0)
