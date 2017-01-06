@@ -30,7 +30,8 @@ class Window extends PApplet {
   val trumpImg = loadImage(playerIcon.img) // Load the player-icon
   var obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
   val wallImgTest = loadImage("src/jumping/wall.png")
-  val level1 = Source.fromFile("src/jumping/lvl1.csv")
+  val spikes = loadImage("src/jumping/spikes.png")
+  val level1 = Source.fromFile("src/jumping/lvl2.csv")
   val firstX = playerIcon.xAxis
   var obsCount = 0 
   var onTop: Boolean = false
@@ -46,7 +47,9 @@ class Window extends PApplet {
         println(arrayOfInts(1))
         for(i<- 0 until koko){
           if(arrayOfInts(i) == 0){
-            obstacles += new Obstacle(firstX + i*30,rivinumero*30 + 86,30,30)
+            obstacles += new Obstacle("wall", firstX + i*30,rivinumero*30 + 86,30,30)
+        } else if(arrayOfInts(i) == 1){
+          obstacles += new Obstacle("spikes", firstX + i*30, rivinumero*30 + 86,30,30)
         }
       }
       rivinumero += 1
@@ -131,16 +134,22 @@ class Window extends PApplet {
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
       thisObs.x = thisObs.x - gameSpeed
+      if(thisObs.obsType == "wall"){
       image(wallImgTest, thisObs.x, thisObs.y, 30, 30)
+      } else if(thisObs.obsType == "spikes"){
+        image(spikes, thisObs.x, thisObs.y, 30, 30)
+      }
       }
     }
     
-    if (isOnTop) {
+    if (isOnTop && obstacles(obsCount).obsType == "wall") {
       println("Now on top")
       playerIcon.vy = 0
       playerIcon.yAxis = obstacles(obsCount).y - playerIcon.height
       println( playerIcon.yAxis + " ja toinen arvo on" + obstacles(obsCount).y)
       if(mousePressed) playerIcon.vy = -15
+    } else if(isOnTop && obstacles(obsCount).obsType == "spikes"){
+      gameState = 2
     }
     
     if (playerIcon.xAxis > obstacles(obsCount).x - gameSpeed + 30) {
