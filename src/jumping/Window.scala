@@ -35,6 +35,8 @@ class Window extends PApplet {
   val firstX = playerIcon.xAxis
   var obsCount = 0 
   var onTop: Boolean = false
+  var gameSpeed = 0
+  var pixelsGone = 0
   //obstacles += new Obstacle(firstX + 500, 250, 50, 50)
 
   private def readLevel() = {
@@ -110,10 +112,11 @@ class Window extends PApplet {
 
   var screenSpeed = playerIcon.xAxis
   var sx = 0
-  var gameSpeed = 0
   
   
   def gameScreen = {
+    gameSpeed = 4
+    pixelsGone += gameSpeed
     obstacles = obstacles.sortBy { _.x}
     var nextObstacle = obstacles(obsCount)
     image(bgImg, screenSpeed, 0)
@@ -130,8 +133,7 @@ class Window extends PApplet {
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
     
    //TESTIKUUTIO
-    var gameSpeed = 0
-    gameSpeed += 4
+    println(gameSpeed)
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
       thisObs.x = thisObs.x - gameSpeed
@@ -150,6 +152,8 @@ class Window extends PApplet {
       println( playerIcon.yAxis + " ja toinen arvo on" + obstacles(obsCount).y)
       if(mousePressed) playerIcon.vy = -15
     } else if(isOnTop && obstacles(obsCount).obsType == "spikes"){
+      resetProgress()
+      pixelsGone = 0
       gameState = 4
     }
     
@@ -159,7 +163,11 @@ class Window extends PApplet {
     }   
     
     
-    if (gameEnds) gameState = 4
+    if (gameEnds) {
+      resetProgress()
+      pixelsGone = 0
+      gameState = 4
+    }
     
   }
   
@@ -182,6 +190,12 @@ class Window extends PApplet {
     } else {
       false
     }
+  }
+  
+  def resetProgress() = {
+     for (thisObs <- obstacles) {
+      thisObs.x = thisObs.x + pixelsGone
+      }
   }
 
      
@@ -213,6 +227,7 @@ class Window extends PApplet {
     text(instructionText, 100, 150)
   }
     private def endScreen = {
+    gameSpeed = 0
     clear()
     background(blurredBg)
     textSize(60)
