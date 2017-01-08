@@ -47,7 +47,7 @@ class Window extends PApplet {
         val arrayOfInts = arrayOfStrings.map(_.trim().toInt)
         val koko = arrayOfInts.size
         println(arrayOfInts(1))
-        for(i<- 0 until koko){
+        for(i <- 0 until koko){
           if(arrayOfInts(i) == 0){
             obstacles += new Obstacle("wall", firstX + i*30,rivinumero*30 + 86,30,30)
         } else if(arrayOfInts(i) == 1){
@@ -128,7 +128,7 @@ class Window extends PApplet {
     
     textSize(20)
     fill(255, 15, 15)
-    text("Your Score: " + millis() / 100 , 250, 40)
+    text("Your Score: " + obsCount * 10, 250, 40)
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
     
@@ -167,6 +167,7 @@ class Window extends PApplet {
       resetProgress()
       pixelsGone = 0
       gameState = 4
+      obsCount = 0 
     }
     
   }
