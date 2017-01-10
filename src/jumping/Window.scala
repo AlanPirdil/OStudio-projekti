@@ -79,6 +79,10 @@ class Window extends PApplet {
       if(key == 'p' || key == 'P') gameState = 1
       else if(key == 'm' || key == 'M') gameState = 2
       else if(key == 'h' || key == 'H') gameState = 3
+      else if(key == 'n' || key == 'N') {
+        sounds.nextSong()
+        sounds.musicPlay()
+      }
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
@@ -211,7 +215,7 @@ class Window extends PApplet {
     fill(0,0,0)
     text("Help", 100, 100)
     
-    val helperText = "Press space to jump\nPress m to go to the main menu\nPress s to mute the soundtrack\nPress e to mute sound effects"
+    val helperText = "Press space to jump\nPress m to go to the main menu\nPress n to switch background music\nPress s to mute the soundtrack\nPress e to mute sound effects"
     textSize(20)
     text(helperText, 100, 150)
   }
