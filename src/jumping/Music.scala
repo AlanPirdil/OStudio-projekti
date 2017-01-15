@@ -7,10 +7,18 @@ class Music {
 
   val song1 = music.loadFile("src/jumping/alone.wav")
   val song2 = music.loadFile("src/jumping/eskimot.wav")
+  val gameMusic = music.loadFile("src/jumping/yep.mp3")
   
   var currentSong = song1
   
   def nextSong() = {
+    currentSong.pause()
+    currentSong.rewind()
+    if(currentSong == song1) currentSong = song2
+    else currentSong = song1
+  }
+
+  def gameMusic() = {
     currentSong.pause()
     currentSong.rewind()
     if(currentSong == song1) currentSong = song2
