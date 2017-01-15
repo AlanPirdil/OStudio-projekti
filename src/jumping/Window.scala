@@ -231,6 +231,10 @@ class Window extends PApplet {
     text(instructionText, 100, 150)
   }
     private def endScreen = {
+    sounds.currentSong.mute()
+    sounds.currentSong = sounds.mainMusic
+    sounds.currentSong.play()
+    sounds.currentSong.unmute()
     gameSpeed = 0
     clear()
     background(blurredBg)
