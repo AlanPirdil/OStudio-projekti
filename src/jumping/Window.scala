@@ -71,7 +71,7 @@ class Window extends PApplet {
      size(areaWidth, areaHeight)
      noStroke()
      readLevel()
-     frameRate(45)
+     frameRate(60)
   }
 
   override def keyPressed() = {
