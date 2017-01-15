@@ -7,7 +7,7 @@ class Music {
 
   val song1 = music.loadFile("src/jumping/alone.wav")
   val song2 = music.loadFile("src/jumping/eskimot.wav")
-  val gameMusic = music.loadFile("src/jumping/yep.mp3")
+  val gameSong = music.loadFile("src/jumping/yep.mp3")
   
   var currentSong = song1
   
