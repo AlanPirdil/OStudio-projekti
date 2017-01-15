@@ -79,6 +79,10 @@ class Window extends PApplet {
       if(key == 'p' || key == 'P') gameState = 1
       else if(key == 'm' || key == 'M') gameState = 2
       else if(key == 'h' || key == 'H') gameState = 3
+      else if(key == 'n' || key == 'N') {
+        sounds.nextSong()
+        sounds.musicPlay()
+      }
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
@@ -115,10 +119,6 @@ class Window extends PApplet {
   
   
   def gameScreen = {
-    sounds.currentSong.mute()
-    sounds.currentSong = sounds.song1
-    sounds.currentSong.play()
-    sounds.currentSong.unmute()
     gameSpeed = 4
     pixelsGone += gameSpeed
     obstacles = obstacles.sortBy { _.x}
@@ -132,7 +132,7 @@ class Window extends PApplet {
     
     textSize(20)
     fill(255, 15, 15)
-    text("Your Score: " + millis() / 100 , 250, 40)
+    text("Your Score: " + obsCount * 10, 250, 40)
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
     
@@ -171,6 +171,7 @@ class Window extends PApplet {
       resetProgress()
       pixelsGone = 0
       gameState = 4
+      obsCount = 0 
     }
     
   }
@@ -214,7 +215,7 @@ class Window extends PApplet {
     fill(0,0,0)
     text("Help", 100, 100)
     
-    val helperText = "Press space to jump\nPress m to go to the main menu\nPress s to mute the soundtrack\nPress e to mute sound effects"
+    val helperText = "Press space to jump\nPress m to go to the main menu\nPress n to switch background music\nPress s to mute the soundtrack\nPress e to mute sound effects"
     textSize(20)
     text(helperText, 100, 150)
   }
@@ -231,10 +232,6 @@ class Window extends PApplet {
     text(instructionText, 100, 150)
   }
     private def endScreen = {
-    sounds.currentSong.mute()
-    sounds.currentSong = sounds.mainMusic
-    sounds.currentSong.play()
-    sounds.currentSong.unmute()
     gameSpeed = 0
     clear()
     background(blurredBg)
