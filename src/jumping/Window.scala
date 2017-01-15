@@ -115,6 +115,10 @@ class Window extends PApplet {
   
   
   def gameScreen = {
+    sounds.currentSong.mute()
+    sounds.currentSong = sounds.song1
+    sounds.currentSong.play()
+    sounds.currentSong.unmute()
     gameSpeed = 4
     pixelsGone += gameSpeed
     obstacles = obstacles.sortBy { _.x}

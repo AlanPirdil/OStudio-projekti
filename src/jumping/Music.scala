@@ -4,8 +4,10 @@ import ddf.minim._
 class Music {
   
   var music = new Minim(Window)
+  val mainMusic = music.loadFile("src/jumping/alone.wav")
   val song1 = music.loadFile("src/jumping/yep.mp3")
-  var currentSong = song1
+  
+  var currentSong = mainMusic
   
   def musicPlay() = currentSong.play()
   
