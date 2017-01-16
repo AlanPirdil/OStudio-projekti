@@ -31,7 +31,7 @@ class Window extends PApplet {
   var obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
   val wallImgTest = loadImage("src/jumping/wall.png")
   val spikes = loadImage("src/jumping/spikes.png")
-  val level1 = Source.fromFile("src/jumping/level1.csv") 
+  val level1 = Source.fromFile("src/jumping/level2.csv") 
   val level1Logo = loadImage("src/jumping/firstStatic.png")
   val level2Logo = loadImage("src/jumping/secondStatic.png")
   val level3Logo = loadImage("src/jumping/thirdStatic.png")
@@ -219,6 +219,9 @@ class Window extends PApplet {
   //CHECKS IF THE PLAYER "COLLIDES" W/ THE WALL
   private def gameEnds: Boolean = {
     if (playerIcon.xAxis + obstacles(obsCount).kanta == obstacles(obsCount).x - gameSpeed && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y) {
+      sounds.pause()
+      effects.play2()
+      effects.rewind2()
       true
     } else {
       false
