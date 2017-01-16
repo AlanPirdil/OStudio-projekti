@@ -76,7 +76,7 @@ class Window extends PApplet {
 
   override def keyPressed() = {
     if(keyPressed) {
-      if(key == 'p' || key == 'P') gameState = 1
+      if(key == 'p' || key == 'P') gameState = 5
       else if(key == 'm' || key == 'M') gameState = 2
       else if(key == 'h' || key == 'H') gameState = 3
       else if(key == 'n' || key == 'N') {
@@ -86,10 +86,13 @@ class Window extends PApplet {
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
-      } else if(key == ' '){
+      } else if(key == ' ') {
             if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
                playerIcon.vy = -15 // Makes Trump jump
               }
+      }
+      if (gameState == 5 && key == '1') {
+        gameState = 1
       }
     }
   }
@@ -112,11 +115,27 @@ class Window extends PApplet {
    else if(gameState == 2) mainMenu
    else if(gameState == 3) helpScreen
    else if(gameState == 4) endScreen
+   else if(gameState == 5) levelSelect
   }
 
   var screenSpeed = playerIcon.xAxis
   var sx = 0
   
+  
+  def levelSelect = {
+    clear()
+    background(blurredBg)
+    textSize(60)
+    fill(0,0,0)
+    text("Level select", 100, 75)
+    val levelText = "Press the number of the level that you want to play:"
+    textSize(20)
+    text(levelText, 100, 125)
+    image(level1Logo, 100, 200, 50, 50)
+    image(level2Logo, 300, 200, 50, 50)
+    image(level3Logo, 500, 200, 50, 50)   
+    
+  }
   
   def gameScreen = {
     gameSpeed = 4
@@ -142,9 +161,9 @@ class Window extends PApplet {
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
       thisObs.x = thisObs.x - gameSpeed
-      if(thisObs.obsType == "wall"){
+      if (thisObs.obsType == "wall") {
       image(wallImgTest, thisObs.x, thisObs.y, 30, 30)
-      } else if(thisObs.obsType == "spikes"){
+      } else if (thisObs.obsType == "spikes") {
         image(spikes, thisObs.x, thisObs.y, 30, 30)
       }
       }
@@ -232,6 +251,7 @@ class Window extends PApplet {
     textSize(20)
     text(instructionText, 100, 150)
   }
+  
     private def endScreen = {
     gameSpeed = 0
     clear()
