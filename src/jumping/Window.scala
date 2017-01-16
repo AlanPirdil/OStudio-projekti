@@ -35,6 +35,10 @@ class Window extends PApplet {
   val level1Logo = loadImage("src/jumping/level1.png")
   val level2Logo = loadImage("src/jumping/level2.png")
   val level3Logo = loadImage("src/jumping/level3.png")
+  val playbutton = loadImage("src/jumping/playStatic.png")
+  val helpbutton = loadImage("src/jumping/helpStatic.png")
+  val mouseOnPlaybutton = loadImage("src/jumping/playHover.png")
+  val mouseOnHelpbutton = loadImage("src/jumping/helpHover.png")
   val firstX = playerIcon.xAxis
   var obsCount = 0 
   var onTop: Boolean = false
@@ -109,6 +113,14 @@ class Window extends PApplet {
     
     if (gameState == 5 && mouseX >= 100 && mouseX <= 150 && mouseY <= 250 && mouseY >= 200) {
     gameState = 1
+    }
+    
+    if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
+      gameState = 5
+    }
+    
+    if (gameState == 2 && mouseX >= 360 && mouseX <= 560 && mouseY >= 150 && mouseY <= 250) {
+      gameState = 3
     }
   }
   
@@ -252,9 +264,16 @@ class Window extends PApplet {
     fill(0,0,0)
     text("Trumpoliini", 100, 100)
     
-    val instructionText = "Crooked Hillary is chasing you.\nYou must escape her to Mexico by jumping\nover the wall you built.\nPress space to jump\nPress h to get help"
-    textSize(20)
-    text(instructionText, 100, 150)
+    image(playbutton, 80, 150, 200, 100)
+    image(helpbutton, 360, 150, 200, 100)
+    
+    if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
+      image(mouseOnPlaybutton, 80, 150, 200, 100)
+    }
+    
+    if (gameState == 2 && mouseX >= 360 && mouseX <= 560 && mouseY >= 150 && mouseY <= 250) {
+      image(mouseOnHelpbutton, 360, 150, 200, 100)
+    } 
   }
   
     private def endScreen = {
