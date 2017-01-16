@@ -31,7 +31,10 @@ class Window extends PApplet {
   var obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
   val wallImgTest = loadImage("src/jumping/wall.png")
   val spikes = loadImage("src/jumping/spikes.png")
-  val level1 = Source.fromFile("src/jumping/lvl2.csv")
+  val level1 = Source.fromFile("src/jumping/level1.csv") 
+  val level1Logo = loadImage("src/jumping/level1.png")
+  val level2Logo = loadImage("src/jumping/level2.png")
+  val level3Logo = loadImage("src/jumping/level3.png")
   val firstX = playerIcon.xAxis
   var obsCount = 0 
   var onTop: Boolean = false
