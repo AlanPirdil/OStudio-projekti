@@ -40,7 +40,6 @@ class Window extends PApplet {
   var onTop: Boolean = false
   var gameSpeed = 0
   var pixelsGone = 0
-  //obstacles += new Obstacle(firstX + 500, 250, 50, 50)
 
   private def readLevel() = {
     try {
@@ -125,20 +124,6 @@ class Window extends PApplet {
   var sx = 0
   
   
-  def levelSelect = {
-    clear()
-    background(blurredBg)
-    textSize(60)
-    fill(0,0,0)
-    text("Level select", 100, 75)
-    val levelText = "Press the number of the level that you want to play:"
-    textSize(20)
-    text(levelText, 100, 125)
-    image(level1Logo, 100, 200, 50, 50)
-    image(level2Logo, 300, 200, 50, 50)
-    image(level3Logo, 500, 200, 50, 50)   
-    
-  }
   
   def gameScreen = {
     gameSpeed = 4
@@ -227,9 +212,21 @@ class Window extends PApplet {
   }
 
      
-//     Make Trump jump
-     
- //END OF gameScreen
+  private def levelSelect = {
+    clear()
+    background(blurredBg)
+    textSize(60)
+    fill(0,0,0)
+    text("Level select", 100, 75)
+    val levelText = "Press the number of the level that you want to play.\nLevels available:"
+    textSize(20)
+    text(levelText, 100, 125)
+    
+    image(level1Logo, 100, 200, 50, 50)
+    image(level2Logo, 300, 200, 50, 50)
+    image(level3Logo, 500, 200, 50, 50)   
+    
+  }
    
   private def helpScreen = {
     clear()
