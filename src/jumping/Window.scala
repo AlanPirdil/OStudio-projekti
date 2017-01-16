@@ -32,9 +32,12 @@ class Window extends PApplet {
   val wallImgTest = loadImage("src/jumping/wall.png")
   val spikes = loadImage("src/jumping/spikes.png")
   val level1 = Source.fromFile("src/jumping/level1.csv") 
-  val level1Logo = loadImage("src/jumping/level1.png")
-  val level2Logo = loadImage("src/jumping/level2.png")
-  val level3Logo = loadImage("src/jumping/level3.png")
+  val level1Logo = loadImage("src/jumping/firstStatic.png")
+  val level2Logo = loadImage("src/jumping/secondStatic.png")
+  val level3Logo = loadImage("src/jumping/thirdStatic.png")
+  val mouseOnLvl1 = loadImage("src/jumping/firstHover.png")
+  val mouseOnLvl2 = loadImage("src/jumping/secondHover.png")
+  val mouseOnLvl3 = loadImage("src/jumping/thirdHover.png")
   val playbutton = loadImage("src/jumping/playStatic.png")
   val helpbutton = loadImage("src/jumping/helpStatic.png")
   val mouseOnPlaybutton = loadImage("src/jumping/playHover.png")
@@ -111,7 +114,7 @@ class Window extends PApplet {
      playerIcon.vy = -15 // Makes Trump jump
     } 
     
-    if (gameState == 5 && mouseX >= 100 && mouseX <= 150 && mouseY <= 250 && mouseY >= 200) {
+    if (gameState == 5 && mouseX >= 85 && mouseX <= 185 && mouseY <= 245 && mouseY >= 145) {
     gameState = 1
     }
     
@@ -235,13 +238,23 @@ class Window extends PApplet {
     textSize(60)
     fill(0,0,0)
     text("Level select", 100, 75)
-    val levelText = "Press the number of the level that you want to play.\nLevels available:"
-    textSize(20)
-    text(levelText, 100, 125)
+
     
-    image(level1Logo, 100, 200, 50, 50)
-    image(level2Logo, 300, 200, 50, 50)
-    image(level3Logo, 500, 200, 50, 50)   
+    image(level1Logo, 85, 145, 100, 100)
+    image(level2Logo, 270, 145, 100, 100)
+    image(level3Logo, 455, 145, 100, 100)   
+    
+    if (gameState == 5 && mouseX >= 85 && mouseX <= 185 && mouseY <= 245 && mouseY >= 145) {
+      image(mouseOnLvl1, 85, 145, 100, 100)
+    }
+    
+    if (gameState == 5 && mouseX >= 270 && mouseX <= 370 && mouseY <= 245 && mouseY >= 145) {
+      image(mouseOnLvl2, 270, 145, 100, 100)
+    }
+    
+    if (gameState == 5 && mouseX >= 455 && mouseX <= 555 && mouseY <= 245 && mouseY >= 145) {
+      image(mouseOnLvl3, 455, 145, 100, 100)
+    }
     
   }
    
