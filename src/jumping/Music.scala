@@ -19,10 +19,11 @@ class Music {
   }
 
   def gameMusic() = {
-    currentSong.pause()
-    currentSong.rewind()
-    if(currentSong == song1) currentSong = song2
-    else currentSong = song1
+    if(currentSong != gameSong) {
+      currentSong.pause()
+      currentSong = gameSong
+      currentSong.play()
+    }
   }
   
   def musicPlay() = currentSong.loop()

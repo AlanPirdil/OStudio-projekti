@@ -121,6 +121,7 @@ class Window extends PApplet {
   def gameScreen = {
     gameSpeed = 4
     pixelsGone += gameSpeed
+    sounds.gameMusic()
     obstacles = obstacles.sortBy { _.x}
     var nextObstacle = obstacles(obsCount)
     image(bgImg, screenSpeed, 0)
