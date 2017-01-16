@@ -102,8 +102,13 @@ class Window extends PApplet {
   override def mousePressed() = { //What happens when mouse is clicked
     effects.rewind1()
     effects.play1()
-    if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
+    
+    if (playerIcon.vy == 20 || isOnTop && gameState == 1) { // Checks if Trump is on the ground
      playerIcon.vy = -15 // Makes Trump jump
+    } 
+    
+    if (gameState == 5 && mouseX >= 100 && mouseX <= 150 && mouseY <= 250 && mouseY >= 200) {
+    gameState = 1
     }
   }
   
