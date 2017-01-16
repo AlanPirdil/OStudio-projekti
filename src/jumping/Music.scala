@@ -31,7 +31,7 @@ class Music {
     }
   }
   
-  def musicPlay() = currentSong.loop()
+  def musicPlay() = if(!currentSong.isPlaying) currentSong.loop()
   
   def isPaused = !currentSong.isPlaying()
   
