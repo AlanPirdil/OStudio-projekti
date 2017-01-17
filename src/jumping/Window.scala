@@ -10,28 +10,27 @@ object Window extends PApplet{
   def main(args:Array[String]) {
     PApplet.main(Array[String]("jumping.Window"))
   }
-
 }
 
 class Window extends PApplet {
-  // useful variables
+  // define the area measures
   val areaWidth = 640
   val areaHeight = 320
   
+  //Starts from main menu
   var gameState = 2
-  
   def situation = this.gameState
   
-  val bgImg = loadImage("src/jumping/BG.png") // Load the background image
-  val blurredBg = loadImage("src/jumping/blurredBg.png")
+  //initialise sounds
   val effects = new SoundEffects
+  val sounds = new Music
+  
+  //initialise player
   val playerIcon = new Player // Initiate a player
-  val sounds = new Music // Initiate the music
-  val trumpImg = loadImage(playerIcon.img) // Load the player-icon
-  var obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
-  val wallImgTest = loadImage("src/jumping/wall.png")
-  val spikes = loadImage("src/jumping/spikes.png")
-  val level1 = Source.fromFile("src/jumping/level2.csv") 
+  
+  //loads all needed images
+  val bgImg = loadImage("src/jumping/BG.png")
+  val blurredBg = loadImage("src/jumping/blurredBg.png")
   val level1Logo = loadImage("src/jumping/firstStatic.png")
   val level2Logo = loadImage("src/jumping/secondStatic.png")
   val level3Logo = loadImage("src/jumping/thirdStatic.png")
@@ -42,20 +41,29 @@ class Window extends PApplet {
   val helpbutton = loadImage("src/jumping/helpStatic.png")
   val mouseOnPlaybutton = loadImage("src/jumping/playHover.png")
   val mouseOnHelpbutton = loadImage("src/jumping/helpHover.png")
+  val wallImgTest = loadImage("src/jumping/wall.png")
+  val spikes = loadImage("src/jumping/spikes.png")
+  val trumpImg = loadImage(playerIcon.img)
+  
+  //loads levelfiles
+  val level1 = Source.fromFile("src/jumping/level1.csv")
+  val level2 = Source.fromFile("src/jumping/level2.csv")
+  
+  //initialise a buffer for obstacles
+  var obstacles = Buffer[Obstacle]() 
   val firstX = playerIcon.xAxis
   var obsCount = 0 
   var onTop: Boolean = false
-  var gameSpeed = 0
   var pixelsGone = 0
+  var chosenLevel = level2
 
   private def readLevel() = {
     try {
       var rivinumero = 1
-      for (rivi <- level1.getLines) {
+      for (rivi <- chosenLevel.getLines) {
         val arrayOfStrings = rivi.split(",")
         val arrayOfInts = arrayOfStrings.map(_.trim().toInt)
         val koko = arrayOfInts.size
-        println(arrayOfInts(1))
         for(i<- 0 until koko){
           if(arrayOfInts(i) == 0){
             obstacles += new Obstacle("wall", firstX + i*30,rivinumero*30 + 86,30,30)
@@ -138,15 +146,14 @@ class Window extends PApplet {
    else if(gameState == 3) helpScreen
    else if(gameState == 4) endScreen
    else if(gameState == 5) levelSelect
+   else if(gameState == 6) victoryScreen
   }
 
   var screenSpeed = playerIcon.xAxis
 
   //Start of gameScreen
   def gameScreen = {
-    gameSpeed = 4
-    pixelsGone += gameSpeed
-    println(pixelsGone)
+    pixelsGone += 4
     sounds.gameMusic()
     obstacles = obstacles.sortBy { _.x}
     var nextObstacle = obstacles(obsCount)
@@ -195,9 +202,17 @@ class Window extends PApplet {
     if (gameEnds) {
       resetProgress()
       gameState = 4
+    }
+    
+    //Go to victory screen if the player won
+    if(playerWon) {
+      resetProgress()
+      gameState = 6
     } 
   }
-  
+    //Checks if the player has won
+    private def playerWon: Boolean = pixelsGone > 7200
+    
     //Checks if the player is on top of something 
    private def isOnTop: Boolean = {
     var currentX = obstacles(obsCount).x - pixelsGone
@@ -279,7 +294,6 @@ class Window extends PApplet {
   }
   
     private def endScreen = {
-    gameSpeed = 0
     clear()
     background(blurredBg)
     textSize(60)
@@ -291,4 +305,18 @@ class Window extends PApplet {
     text(deathDeclaration, 100, 150)
     text("Your score:", 100, 250)
   }
+   
+  private def victoryScreen = {
+    clear()
+    background(blurredBg)
+    textSize(60)
+    fill(0,0,0)
+    text("VICTORY", 100, 100)
+    
+    val congratulations = "Hooray!\nYou made it to Mexico, congratulations!\nHillary can't catch you when you're here.\nThis means you are safe...\nOR ARE YOU???"
+    textSize(20)
+    text(congratulations, 100, 150)
+  }
+    
+  
 }
