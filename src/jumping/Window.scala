@@ -31,7 +31,7 @@ class Window extends PApplet {
   var obstacles = Buffer[Obstacle]() //(new Obstacle(playerIcon.xAxis, 250, 50, 50))
   val wallImgTest = loadImage("src/jumping/wall.png")
   val spikes = loadImage("src/jumping/spikes.png")
-  val level1 = Source.fromFile("src/jumping/level1.csv") 
+  val level1 = Source.fromFile("src/jumping/level2.csv") 
   val level1Logo = loadImage("src/jumping/firstStatic.png")
   val level2Logo = loadImage("src/jumping/secondStatic.png")
   val level3Logo = loadImage("src/jumping/thirdStatic.png")
@@ -141,13 +141,12 @@ class Window extends PApplet {
   }
 
   var screenSpeed = playerIcon.xAxis
-  var sx = 0
-  
-  
-  
+
+  //Start of gameScreen
   def gameScreen = {
     gameSpeed = 4
     pixelsGone += gameSpeed
+    println(pixelsGone)
     sounds.gameMusic()
     obstacles = obstacles.sortBy { _.x}
     var nextObstacle = obstacles(obsCount)
@@ -156,82 +155,72 @@ class Window extends PApplet {
     image(bgImg, screenSpeed + areaWidth, 0)
     screenSpeed -= 2
     if(abs(screenSpeed) > areaWidth) screenSpeed= 0
-    sx += 2
     
     textSize(20)
     fill(255, 15, 15)
-    text("Your Score: " + obsCount * 10, 250, 40)
+    text("Your Score: " + millis(), 250, 40)
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
-    
-   //TESTIKUUTIO
-    println(gameSpeed)
+
+    // Draws the obstacles
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
-      thisObs.x = thisObs.x - gameSpeed
       if (thisObs.obsType == "wall") {
-      image(wallImgTest, thisObs.x, thisObs.y, 30, 30)
+      image(wallImgTest, thisObs.x - pixelsGone, thisObs.y, 30, 30)
       } else if (thisObs.obsType == "spikes") {
-        image(spikes, thisObs.x, thisObs.y, 30, 30)
+        image(spikes, thisObs.x - pixelsGone, thisObs.y, 30, 30)
       }
       }
     }
     
-    if (isOnTop && obstacles(obsCount).obsType == "wall") {
-      println("Now on top")
+    //When the player is on a wall, he's able to jump
+    if (isOnTop && nextObstacle.obsType == "wall") {
       playerIcon.vy = 0
       playerIcon.yAxis = obstacles(obsCount).y - playerIcon.height
-      println( playerIcon.yAxis + " ja toinen arvo on" + obstacles(obsCount).y)
       if(mousePressed) playerIcon.vy = -15
-    } else if(isOnTop && obstacles(obsCount).obsType == "spikes"){
+    } 
+    //If the player lands on a spike he dies
+    else if(isOnTop && obstacles(obsCount).obsType == "spikes"){
       resetProgress()
-      pixelsGone = 0
       gameState = 4
     }
-    
-    if (playerIcon.xAxis > obstacles(obsCount).x - gameSpeed + 30) {
+
+    //Chooses the next obstacle after moving past one
+    if (playerIcon.xAxis > obstacles(obsCount).x - pixelsGone + 30) {
       if (obstacles.length > obsCount + 1)
         obsCount += 1
     }   
     
-    
+    //Change the gameState when game ends
     if (gameEnds) {
       resetProgress()
-      pixelsGone = 0
       gameState = 4
-      obsCount = 0 
-    }
-    
+    } 
   }
   
+    //Checks if the player is on top of something 
    private def isOnTop: Boolean = {
-    var currentX = obstacles(obsCount).x - gameSpeed
-    //ONLY FOR TESTING PURPOSES:
-    var testi =  playerIcon.xAxis + 30
-    var testi2 = currentX + 30
-   // println(gameEnds)
-   // println(playerIcon.xAxis + 30  > currentX && playerIcon.yAxis + 50 == obstacles(obsCount).y && playerIcon.xAxis < currentX + 30)
-   // println(playerIcon.xAxis + 30 + " > " + currentX + " && " + (playerIcon.yAxis + 50) + " == " + obstacles(obsCount).y + " && " + playerIcon.xAxis + " < " + (currentX + 30))
-    //THIS, HOWEVER, IS RELEVANT:
-    playerIcon.xAxis + obstacles(obsCount).kanta > currentX && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y && playerIcon.xAxis < currentX + obstacles(obsCount).kanta
+    var currentX = obstacles(obsCount).x - pixelsGone
+    playerIcon.xAxis + playerIcon.width > currentX && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y && playerIcon.xAxis < currentX + obstacles(obsCount).width
   }
   
-  //CHECKS IF THE PLAYER "COLLIDES" W/ THE WALL
+
+    //Checks whether the player has collided into an obstacle
   private def gameEnds: Boolean = {
-    if (playerIcon.xAxis + obstacles(obsCount).kanta == obstacles(obsCount).x - gameSpeed && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y) {
+    if (playerIcon.xAxis + obstacles(obsCount).width == obstacles(obsCount).x - pixelsGone && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y) {
       true
     } else {
       false
     }
   }
   
+    //Resets the progress so a level can be played again without closing the window
   def resetProgress() = {
-     for (thisObs <- obstacles) {
-      thisObs.x = thisObs.x + pixelsGone
-      }
+    pixelsGone = 0
+    obsCount = 0
   }
 
-     
+  //Start of LevelSelect
   private def levelSelect = {
     clear()
     background(blurredBg)
