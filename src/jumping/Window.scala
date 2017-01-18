@@ -44,6 +44,8 @@ class Window extends PApplet {
   val wallImgTest = loadImage("src/jumping/wall.png")
   val spikes = loadImage("src/jumping/spikes.png")
   val trumpImg = loadImage(playerIcon.img)
+  val backbutton = loadImage("src/jumping/back.png")
+  val tryagain = loadImage("src/jumping/tryagain.png")
   
   //loads levelfiles
   val level1 = Source.fromFile("src/jumping/level1.csv")
@@ -122,7 +124,8 @@ class Window extends PApplet {
     }
   }
   
-  override def mousePressed() = { //What happens when mouse is clicked
+  //What happens when mouse is clicked
+  override def mousePressed() = { 
     effects.rewind1()
     effects.play1()
     
@@ -131,9 +134,16 @@ class Window extends PApplet {
     } 
     
     if (gameState == 5 && mouseX >= 85 && mouseX <= 185 && mouseY <= 245 && mouseY >= 145) {
-    gameState = 1
+      gameState = 1
     }
     
+    if (gameState == 5 && mouseX >= 270 && mouseX <= 370 && mouseY <= 245 && mouseY >= 145) {
+      gameState = 1  
+    }
+    
+    if (gameState == 5 && mouseX >= 455 && mouseX <= 555 && mouseY <= 245 && mouseY >= 145) {
+      gameState = 1
+    }
     if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
       gameState = 5
     }
@@ -141,6 +151,19 @@ class Window extends PApplet {
     if (gameState == 2 && mouseX >= 360 && mouseX <= 560 && mouseY >= 150 && mouseY <= 250) {
       gameState = 3
     }
+    
+    if (gameState == 3 && mouseX >= 400 && mouseX <= 600 && mouseY >= 25 && mouseY <= 125) {
+      gameState = 2
+    }
+    
+    if (gameState == 4 && mouseX >= 113 && mouseX <= 263 && mouseY >= 225 && mouseY <= 300) {
+      gameState = 1
+    }
+    
+    if (gameState == 4 && mouseX >= 376 && mouseX <= 526 && mouseY >= 225 && mouseY <= 300) {
+      gameState = 2
+    }
+       
   }
   
   
@@ -176,7 +199,7 @@ class Window extends PApplet {
     
     textSize(20)
     fill(255, 15, 15)
-    text("Your Score: " + millis(), 250, 40)
+    text("Your Score: " + millis(), 250, 40) //millis() will count throughout the runtime of the application...
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
 
@@ -283,6 +306,7 @@ class Window extends PApplet {
     val helperText = "Press space to jump\nPress m to go to the main menu\nPress n to switch background music\nPress s to mute the soundtrack\nPress e to mute sound effects"
     textSize(20)
     text(helperText, 100, 150)
+    image(backbutton, 400, 25, 200, 100)
   }
   
   private def mainMenu = {
@@ -315,8 +339,11 @@ class Window extends PApplet {
     
     val deathDeclaration = "You didn't survive to Mexico.\nCrooked Hillary put you to jail but Soon(tm)\nyou will get your revenge."
     textSize(20)
-    text(deathDeclaration, 100, 150)
-    text("Your score:", 100, 250)
+    text(deathDeclaration, 80, 150)
+    
+    image(tryagain, 113, 225, 150, 75)
+    image(backbutton, 376, 225, 150, 75)
+    
   }
    
   private def victoryScreen = {
