@@ -93,12 +93,20 @@ class Window extends PApplet {
 
   override def keyPressed() = {
     if(keyPressed) {
-      if(key == 'p' || key == 'P') gameState = 5
-      else if(key == 'm' || key == 'M') gameState = 2
-      else if(key == 'h' || key == 'H') gameState = 3
+      if(key == 'p' || key == 'P') {
+        loop()
+        gameState = 5
+      }
+      else if(key == 'm' || key == 'M') {
+        loop()
+        gameState = 2
+      }
+      else if(key == 'h' || key == 'H') {
+        loop()
+        gameState = 3
+      }
       else if(key == 'n' || key == 'N') {
         sounds.nextSong()
-        sounds.musicPlay()
       }
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
@@ -140,7 +148,6 @@ class Window extends PApplet {
   //draw runs 60 time per second
  
   override def draw(): Unit = {
-     
    if(gameState == 1) gameScreen
    else if(gameState == 2) mainMenu
    else if(gameState == 3) helpScreen
@@ -153,8 +160,12 @@ class Window extends PApplet {
 
   //Start of gameScreen
   def gameScreen = {
+    if(pixelsGone == 0) {
+      sounds.pauseAll()
+      sounds.rewindAll()
+      sounds.gameMusic()
+    }
     pixelsGone += 4
-    sounds.gameMusic()
     obstacles = obstacles.sortBy { _.x}
     var nextObstacle = obstacles(obsCount)
     image(bgImg, screenSpeed, 0)
@@ -275,6 +286,7 @@ class Window extends PApplet {
   }
   
   private def mainMenu = {
+    loop()
     clear()
     background(blurredBg)
     textSize(60)
@@ -295,6 +307,7 @@ class Window extends PApplet {
   
     private def endScreen = {
     clear()
+    sounds.pauseAll()
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
@@ -308,6 +321,9 @@ class Window extends PApplet {
    
   private def victoryScreen = {
     clear()
+    sounds.pauseAll()
+    sounds.playVictory()
+    sounds.rewindAll()
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
@@ -316,6 +332,7 @@ class Window extends PApplet {
     val congratulations = "Hooray!\nYou made it to Mexico, congratulations!\nHillary can't catch you when you're here.\nThis means you are safe...\nOR ARE YOU???"
     textSize(20)
     text(congratulations, 100, 150)
+    noLoop()
   }
     
   
