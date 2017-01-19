@@ -192,8 +192,6 @@ class Window extends PApplet {
 
   //Start of gameScreen
   def gameScreen = {
-    println(playerIcon.yAxis + playerIcon.height)
-    println(obstacles(obsCount).y + obstacles(obsCount).height)
     if(pixelsGone == 0) {
       sounds.pauseAll()
       sounds.rewindAll()
@@ -278,8 +276,10 @@ class Window extends PApplet {
     //Checks whether the player has collided into an obstacle
   private def gameEnds: Boolean = {
   //  if(playerIcon.xAxis + playerIcon.width == obstacles(obsCount).x - pixelsGone && (playerIcon.yAxis + playerIcon.height >= obstacles(obsCount).y)) {
-     if(obstacles.exists( ob => playerIcon.xAxis + playerIcon.width == ob.x - pixelsGone && playerIcon.yAxis + playerIcon.height - 10 > ob.y)) {
-    true
+   if(obstacles.exists( ob => playerIcon.xAxis + playerIcon.width == ob.x - pixelsGone && playerIcon.yAxis + playerIcon.height - 10 > ob.y)) {
+     effects.play2()
+     effects.rewind2()
+     true
     } else {
       false
     }
