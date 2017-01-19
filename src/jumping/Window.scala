@@ -29,23 +29,23 @@ class Window extends PApplet {
   val playerIcon = new Player // Initiate a player
   
   //loads all needed images
-  val bgImg = loadImage("src/jumping/BG.png")
-  val blurredBg = loadImage("src/jumping/blurredBg.png")
-  val level1Logo = loadImage("src/jumping/firstStatic.png")
-  val level2Logo = loadImage("src/jumping/secondStatic.png")
-  val level3Logo = loadImage("src/jumping/thirdStatic.png")
-  val mouseOnLvl1 = loadImage("src/jumping/firstHover.png")
-  val mouseOnLvl2 = loadImage("src/jumping/secondHover.png")
-  val mouseOnLvl3 = loadImage("src/jumping/thirdHover.png")
-  val playbutton = loadImage("src/jumping/playStatic.png")
-  val helpbutton = loadImage("src/jumping/helpStatic.png")
-  val mouseOnPlaybutton = loadImage("src/jumping/playHover.png")
-  val mouseOnHelpbutton = loadImage("src/jumping/helpHover.png")
-  val wallImgTest = loadImage("src/jumping/wall.png")
-  val spikes = loadImage("src/jumping/spikes.png")
+  val bgImg = loadImage("src/photos/BG.png")
+  val blurredBg = loadImage("src/photos/blurredBg.png")
+  val level1Logo = loadImage("src/photos/firstStatic.png")
+  val level2Logo = loadImage("src/photos/secondStatic.png")
+  val level3Logo = loadImage("src/photos/thirdStatic.png")
+  val mouseOnLvl1 = loadImage("src/photos/firstHover.png")
+  val mouseOnLvl2 = loadImage("src/photos/secondHover.png")
+  val mouseOnLvl3 = loadImage("src/photos/thirdHover.png")
+  val playbutton = loadImage("src/photos/playStatic.png")
+  val helpbutton = loadImage("src/photos/helpStatic.png")
+  val mouseOnPlaybutton = loadImage("src/photos/playHover.png")
+  val mouseOnHelpbutton = loadImage("src/photos/helpHover.png")
+  val wallImgTest = loadImage("src/photos/wall.png")
+  val spikes = loadImage("src/photos/spikes.png")
   val trumpImg = loadImage(playerIcon.img)
-  val backbutton = loadImage("src/jumping/back.png")
-  val tryagain = loadImage("src/jumping/tryagain.png")
+  val backbutton = loadImage("src/photos/back.png")
+  val tryagain = loadImage("src/photos/tryagain.png")
   
   //loads levelfiles
   val level1 = Source.fromFile("src/jumping/level1.csv")
@@ -225,7 +225,7 @@ class Window extends PApplet {
     } 
     
     //If the player lands on a spike he dies
-    else if(isOnTop && obstacles(obsCount).obsType == "spikes"){
+    else if(isOnTop && obstacles(obsCount).obsType == "spikes") {
       resetProgress()
       gameState = 4
     }

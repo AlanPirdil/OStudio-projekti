@@ -4,7 +4,7 @@ import scala.math._
 
 class Player {
 
-  val img = "src/jumping/trump.png"
+  val img = "src/photos/trump.png"
   var xAxis = 30          // initial x
   var yAxis = 160        // initial y
   var vy = 0
