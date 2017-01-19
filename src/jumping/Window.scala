@@ -29,7 +29,9 @@ class Window extends PApplet {
   val playerIcon = new Player // Initiate a player
   
   //loads all needed images
-  val bgImg = loadImage("src/photos/BG.png")
+  val bgImg1 = loadImage("src/photos/BG.png")
+  val bgImg2 = loadImage("src/photos/level2BG.jpg")
+  val bgImg3 = loadImage("src/photos/level3Bg.jpg")
   val blurredBg = loadImage("src/photos/blurredBg.png")
   val level1Logo = loadImage("src/photos/firstStatic.png")
   val level2Logo = loadImage("src/photos/secondStatic.png")
@@ -63,6 +65,8 @@ class Window extends PApplet {
   var obsCount = 0
   var onTop: Boolean = false
   var pixelsGone = 0
+  var currentLevel = 1
+  var currentBgImg = bgImg1
 
   private def readLevel(levelToRead: Source, obstacleBuffer: Buffer[Obstacle] ) = {
     try {
@@ -141,18 +145,21 @@ class Window extends PApplet {
     //First level
     if (gameState == 5 && mouseX >= 85 && mouseX <= 185 && mouseY <= 245 && mouseY >= 145) {
       obstacles = firstObstacles
+      currentBgImg = bgImg1
       gameState = 1
     }
     
     //Second level
     if (gameState == 5 && mouseX >= 270 && mouseX <= 370 && mouseY <= 245 && mouseY >= 145) {
        obstacles = secondObstacles
+       currentBgImg = bgImg2
       gameState = 1  
     }
     
     //Third level
     if (gameState == 5 && mouseX >= 455 && mouseX <= 555 && mouseY <= 245 && mouseY >= 145) {
       obstacles = thirdObstacles
+      currentBgImg = bgImg3
       gameState = 1
     }
     if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
@@ -205,9 +212,9 @@ class Window extends PApplet {
     pixelsGone += 4
     obstacles = obstacles.sortBy(_.x)
     var nextObstacle = obstacles(obsCount)
-    image(bgImg, screenSpeed, 0)
-    image(bgImg, screenSpeed - areaWidth, 0)
-    image(bgImg, screenSpeed + areaWidth, 0)
+    image(currentBgImg, screenSpeed, 0)
+    image(currentBgImg, screenSpeed - areaWidth, 0)
+    image(currentBgImg, screenSpeed + areaWidth, 0)
     screenSpeed -= 2
     if(abs(screenSpeed) > areaWidth) screenSpeed= 0
     
