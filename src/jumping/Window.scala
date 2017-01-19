@@ -202,7 +202,7 @@ class Window extends PApplet {
     textSize(20)
     fill(0, 0, 0)
     var progress = obsCount / 171.0 * 100.0
-    text("Your Score: " + progress.toInt + "%", 250, 40) //millis() will count throughout the runtime of the application...
+    text("Your Progress: " + progress.toInt + "%", 250, 40) //millis() will count throughout the runtime of the application...
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
 
@@ -223,6 +223,7 @@ class Window extends PApplet {
       playerIcon.yAxis = obstacles(obsCount).y - playerIcon.height
       if(mousePressed) playerIcon.vy = -15
     } 
+    
     //If the player lands on a spike he dies
     else if(isOnTop && obstacles(obsCount).obsType == "spikes"){
       resetProgress()
