@@ -127,7 +127,9 @@ class Window extends PApplet {
   //What happens when mouse is clicked
   override def mousePressed() = { 
     effects.rewind1()
-    effects.play1()
+    if (gameState == 1) {
+      effects.play1()
+    }
     
     if (playerIcon.vy == 20 || isOnTop && gameState == 1) { // Checks if Trump is on the ground
      playerIcon.vy = -15 // Makes Trump jump
@@ -198,8 +200,9 @@ class Window extends PApplet {
     if(abs(screenSpeed) > areaWidth) screenSpeed= 0
     
     textSize(20)
-    fill(255, 15, 15)
-    text("Your Score: " + millis(), 250, 40) //millis() will count throughout the runtime of the application...
+    fill(0, 0, 0)
+    var progress = obsCount / 171.0 * 100.0
+    text("Your Score: " + progress.toInt + "%", 250, 40) //millis() will count throughout the runtime of the application...
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
 
