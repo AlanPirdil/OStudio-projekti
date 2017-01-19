@@ -52,25 +52,27 @@ class Window extends PApplet {
   val level2 = Source.fromFile("src/jumping/level2.csv")
   
   //initialise a buffer for obstacles
-  var obstacles = Buffer[Obstacle]() 
+  var firstObstacles = Buffer[Obstacle]()
+  var secondObstacles = Buffer[Obstacle]()
+  var thirdObstacles = Buffer[Obstacle]()
+  var obstacles = firstObstacles
   val firstX = playerIcon.xAxis
-  var obsCount = 0 
+  var obsCount = 0
   var onTop: Boolean = false
   var pixelsGone = 0
-  var chosenLevel = level2
 
-  private def readLevel() = {
+  private def readLevel(levelToRead: Source, obstacleBuffer: Buffer[Obstacle] ) = {
     try {
       var rivinumero = 1
-      for (rivi <- chosenLevel.getLines) {
+      for (rivi <- levelToRead.getLines) {
         val arrayOfStrings = rivi.split(",")
         val arrayOfInts = arrayOfStrings.map(_.trim().toInt)
         val koko = arrayOfInts.size
         for(i<- 0 until koko){
           if(arrayOfInts(i) == 0){
-            obstacles += new Obstacle("wall", firstX + i*30,rivinumero*30 + 86,30,30)
+            obstacleBuffer += new Obstacle("wall", firstX + i*30,rivinumero*30 + 86,30,30)
         } else if(arrayOfInts(i) == 1){
-          obstacles += new Obstacle("spikes", firstX + i*30, rivinumero*30 + 86,30,30)
+          obstacleBuffer += new Obstacle("spikes", firstX + i*30, rivinumero*30 + 86,30,30)
         }
       }
       rivinumero += 1
@@ -89,7 +91,8 @@ class Window extends PApplet {
      sounds.musicPlay()
      size(areaWidth, areaHeight)
      noStroke()
-     readLevel()
+     readLevel(level1, firstObstacles)
+     readLevel(level2, secondObstacles)
      frameRate(60)
   }
 
@@ -131,15 +134,21 @@ class Window extends PApplet {
      playerIcon.vy = -15 // Makes Trump jump
     } 
     
+    //First level
     if (gameState == 5 && mouseX >= 85 && mouseX <= 185 && mouseY <= 245 && mouseY >= 145) {
+      obstacles = firstObstacles
       gameState = 1
     }
     
+    //Second level
     if (gameState == 5 && mouseX >= 270 && mouseX <= 370 && mouseY <= 245 && mouseY >= 145) {
+       obstacles = secondObstacles
       gameState = 1  
     }
     
+    //Third level
     if (gameState == 5 && mouseX >= 455 && mouseX <= 555 && mouseY <= 245 && mouseY >= 145) {
+      obstacles = thirdObstacles
       gameState = 1
     }
     if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
