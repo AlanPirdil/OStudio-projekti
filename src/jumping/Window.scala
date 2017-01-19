@@ -44,8 +44,10 @@ class Window extends PApplet {
   val wallImgTest = loadImage("src/photos/wall.png")
   val spikes = loadImage("src/photos/spikes.png")
   val trumpImg = loadImage(playerIcon.img)
-  val backbutton = loadImage("src/photos/back.png")
-  val tryagain = loadImage("src/photos/tryagain.png")
+  val back = loadImage("src/photos/backStatic.png")
+  val mouseOnBack = loadImage("src/photos/backHover.png")
+  val tryagain = loadImage("src/photos/againStatic.png")
+  val mouseOnAgain = loadImage("src/photos/againHover.png")
   
   //loads levelfiles
   val level1 = Source.fromFile("src/jumping/level1.csv")
@@ -114,7 +116,7 @@ class Window extends PApplet {
       }
       else if(key == 'n' || key == 'N') {
         sounds.nextSong()
-      }
+      } 
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
@@ -170,6 +172,9 @@ class Window extends PApplet {
     }
     
     if (gameState == 4 && mouseX >= 376 && mouseX <= 526 && mouseY >= 225 && mouseY <= 300) {
+      gameState = 2
+    }
+    if (gameState == 6 && mouseX >= 400 && mouseX <= 550 && mouseY >= 230 && mouseY <= 305) {
       gameState = 2
     }
        
@@ -325,10 +330,14 @@ class Window extends PApplet {
     fill(0,0,0)
     text("Help", 100, 100)
     
-    val helperText = "Press space to jump\nPress m to go to the main menu\nPress n to switch background music\nPress s to mute the soundtrack\nPress e to mute sound effects"
+    val helperText = "Left click to jump\nPress m to go to the main menu\nPress n to switch background music\nPress s to mute the soundtrack\nPress e to mute sound effects"
     textSize(20)
     text(helperText, 100, 150)
-    image(backbutton, 400, 25, 200, 100)
+    image(back, 400, 25, 200, 100)
+    
+    if (gameState == 3 && mouseX >= 400 && mouseX <= 600 && mouseY >= 25 && mouseY <= 125) {
+      image(mouseOnBack, 400, 25, 200, 100)
+    }
   }
   
   private def mainMenu = {
@@ -359,20 +368,31 @@ class Window extends PApplet {
     fill(0,0,0)
     text("GAME OVER", 100, 100)
     
-    val deathDeclaration = "You didn't survive to Mexico.\nCrooked Hillary put you to jail but Soon(tm)\nyou will get your revenge."
+    val deathDeclaration = "You didn't survive to Mexico.\nCrooked Hillary put you in jail but Soon(tm)\nyou will get your revenge."
     textSize(20)
     text(deathDeclaration, 80, 150)
     
     image(tryagain, 113, 225, 150, 75)
-    image(backbutton, 376, 225, 150, 75)
+    image(back, 376, 225, 150, 75)
+    
+    if (gameState == 4 && mouseX >= 113 && mouseX <= 263 && mouseY >= 225 && mouseY <= 300) {
+      image(mouseOnAgain, 113, 225, 150, 75)
+    }
+    
+    if (gameState == 4 && mouseX >= 376 && mouseX <= 526 && mouseY >= 225 && mouseY <= 300) {
+      image(mouseOnBack, 376, 225, 150, 75)
+    }
+       
     
   }
    
   private def victoryScreen = {
     clear()
     sounds.pauseAll()
+    if(sounds.isPaused){
     sounds.playVictory()
     sounds.rewindAll()
+    }
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
@@ -381,7 +401,11 @@ class Window extends PApplet {
     val congratulations = "Hooray!\nYou made it to Mexico, congratulations!\nHillary can't catch you when you're here.\nThis means you are safe...\nOR ARE YOU???"
     textSize(20)
     text(congratulations, 100, 150)
-    noLoop()
+    
+    image(back, 400, 230, 150, 75)
+    if (gameState == 6 && mouseX >= 400 && mouseX <= 550 && mouseY >= 230 && mouseY <= 305) {
+      image(mouseOnBack, 400, 230, 150, 75)
+    }
   }
     
   
