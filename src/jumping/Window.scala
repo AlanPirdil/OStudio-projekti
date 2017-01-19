@@ -50,6 +50,7 @@ class Window extends PApplet {
   //loads levelfiles
   val level1 = Source.fromFile("src/jumping/level1.csv")
   val level2 = Source.fromFile("src/jumping/level2.csv")
+  val level3 = Source.fromFile("src/jumping/level3.csv")
   
   //initialise a buffer for obstacles
   var firstObstacles = Buffer[Obstacle]()
@@ -93,6 +94,7 @@ class Window extends PApplet {
      noStroke()
      readLevel(level1, firstObstacles)
      readLevel(level2, secondObstacles)
+     readLevel(level3, thirdObstacles)
      frameRate(60)
   }
 
