@@ -226,6 +226,8 @@ class Window extends PApplet {
     
     //If the player lands on a spike he dies
     else if(isOnTop && obstacles(obsCount).obsType == "spikes") {
+      effects.play2()
+      effects.rewind2()
       resetProgress()
       gameState = 4
     }
