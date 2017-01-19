@@ -196,7 +196,7 @@ class Window extends PApplet {
       sounds.gameMusic()
     }
     pixelsGone += 4
-    obstacles = obstacles.sortBy { _.x}
+    obstacles = obstacles.sortBy(_.x)
     var nextObstacle = obstacles(obsCount)
     image(bgImg, screenSpeed, 0)
     image(bgImg, screenSpeed - areaWidth, 0)
@@ -243,9 +243,10 @@ class Window extends PApplet {
     }
 
     //Chooses the next obstacle after moving past one
-    if (playerIcon.xAxis > obstacles(obsCount).x - pixelsGone + 30) {
-      if (obstacles.length > obsCount + 1)
+    if (playerIcon.xAxis > obstacles(obsCount).x - pixelsGone + obstacles(obsCount).width) {
+      if (obstacles.length > obsCount + 1) {
         obsCount += 1
+      }
     }   
     
     //Change the gameState when game ends
@@ -272,7 +273,7 @@ class Window extends PApplet {
 
     //Checks whether the player has collided into an obstacle
   private def gameEnds: Boolean = {
-    if (playerIcon.xAxis + obstacles(obsCount).width == obstacles(obsCount).x - pixelsGone && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y) {
+    if (playerIcon.xAxis + playerIcon.width == obstacles(obsCount).x - pixelsGone && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y) {
       true
     } else {
       false
