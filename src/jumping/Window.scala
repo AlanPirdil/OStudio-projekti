@@ -113,10 +113,6 @@ class Window extends PApplet {
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
-      } else if(key == ' ') {
-            if(playerIcon.vy == 20 || isOnTop) { // Checks if Trump is on the ground
-               playerIcon.vy = -15 // Makes Trump jump
-              }
       }
       if (gameState == 5 && key == '1') {
         gameState = 1
@@ -201,8 +197,13 @@ class Window extends PApplet {
     
     textSize(20)
     fill(0, 0, 0)
-    var progress = obsCount / 171.0 * 100.0
-    text("Your Progress: " + progress.toInt + "%", 250, 40) //millis() will count throughout the runtime of the application...
+    val lastOne = obstacles(obstacles.size - 1).x
+    var progress = pixelsGone * 1.0 / lastOne * 1.0
+    if ((progress * 100.0).toInt < 100) {
+      text("Your Progress: " + (progress * 100.0).toInt + "%", 250, 40) 
+    } else {
+      text("Your Progress: " + 100 + "%", 250, 40) 
+    }
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
 
