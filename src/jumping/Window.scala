@@ -71,9 +71,9 @@ class Window extends PApplet {
         val koko = arrayOfInts.size
         for(i<- 0 until koko){
           if(arrayOfInts(i) == 0){
-            obstacleBuffer += new Obstacle("wall", firstX + i*30,rivinumero*30 + 86,30,30)
+            obstacleBuffer += new Obstacle("wall", firstX + i*30,rivinumero*30 + 90,30,30)
         } else if(arrayOfInts(i) == 1){
-          obstacleBuffer += new Obstacle("spikes", firstX + i*30, rivinumero*30 + 86,30,30)
+          obstacleBuffer += new Obstacle("spikes", firstX + i*30, rivinumero*30 + 90,30,30)
         }
       }
       rivinumero += 1
@@ -192,6 +192,8 @@ class Window extends PApplet {
 
   //Start of gameScreen
   def gameScreen = {
+    println(playerIcon.yAxis + playerIcon.height)
+    println(obstacles(obsCount).y + obstacles(obsCount).height)
     if(pixelsGone == 0) {
       sounds.pauseAll()
       sounds.rewindAll()
@@ -232,7 +234,7 @@ class Window extends PApplet {
     //When the player is on a wall, he's able to jump
     if (isOnTop && nextObstacle.obsType == "wall") {
       playerIcon.vy = 0
-      playerIcon.yAxis = obstacles(obsCount).y - playerIcon.height
+      playerIcon.yAxis = nextObstacle.y - playerIcon.height
       if(mousePressed) playerIcon.vy = -15
     } 
     
@@ -275,8 +277,9 @@ class Window extends PApplet {
 
     //Checks whether the player has collided into an obstacle
   private def gameEnds: Boolean = {
-    if (playerIcon.xAxis + playerIcon.width == obstacles(obsCount).x - pixelsGone && playerIcon.yAxis + playerIcon.height > obstacles(obsCount).y) {
-      true
+  //  if(playerIcon.xAxis + playerIcon.width == obstacles(obsCount).x - pixelsGone && (playerIcon.yAxis + playerIcon.height >= obstacles(obsCount).y)) {
+     if(obstacles.exists( ob => playerIcon.xAxis + playerIcon.width == ob.x - pixelsGone && playerIcon.yAxis + playerIcon.height - 10 > ob.y)) {
+    true
     } else {
       false
     }
