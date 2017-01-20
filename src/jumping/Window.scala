@@ -102,6 +102,7 @@ class Window extends PApplet {
      readLevel(level2, secondObstacles)
      readLevel(level3, thirdObstacles)
      frameRate(60)
+     frame.setTitle("Trumpoliini")
   }
 
   override def keyPressed() = {
