@@ -84,8 +84,8 @@ class Window extends PApplet {
       for (rivi <- levelToRead.getLines) {
         val arrayOfStrings = rivi.split(",")
         val arrayOfInts = arrayOfStrings.map(_.trim().toInt)
-        val koko = arrayOfInts.size
-        for(i <- 0 until koko){
+        val arraySize = arrayOfInts.size
+        for(i <- 0 until arraySize){
           if(arrayOfInts(i) == 0){
             obstacleBuffer += new Obstacle("wall", firstX + i * 30, rowNum*30 + 90,30,30)
         } else if(arrayOfInts(i) == 1){
@@ -96,10 +96,10 @@ class Window extends PApplet {
     }
  
   }      catch {
-        case e: Exception => "juu" 
+        case e: Exception => "ERROR" 
       }
     finally {
-    level1.close()
+    levelToRead.close()
   }
  }
   
