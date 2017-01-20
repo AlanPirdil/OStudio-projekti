@@ -226,13 +226,23 @@ class Window extends PApplet {
     textFont(usedFont, 32)
     textSize(20)
     fill(0, 0, 0)
+    
     val lastOne = obstacles(obstacles.size - 1).x
     var progress = pixelsGone * 1.0 / lastOne * 1.0
-    if ((progress * 100.0).toInt < 100) {
+    
+    if (pixelsGone < 420) {
+      textSize(32)
+      text("Left click to jump", 200, 70)
+      textSize(20)
+      text("Your Progress: " + (progress * 100.0).toInt + "%", 250, 40) 
+    } else {
+      if ((progress * 100.0).toInt < 100) {
       text("Your Progress: " + (progress * 100.0).toInt + "%", 250, 40) 
     } else {
       text("Your Progress: " + 100 + "%", 250, 40) 
     }
+    }
+    
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
 
