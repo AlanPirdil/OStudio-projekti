@@ -111,23 +111,23 @@ class Window extends PApplet {
   override def keyPressed() = {
     if(keyPressed) {
       if(key == 'p' || key == 'P') {
-        loop()
         gameState = 5
       }
       else if(key == 'm' || key == 'M') {
-        loop()
         gameState = 2
       }
       else if(key == 'h' || key == 'H') {
-        loop()
         gameState = 3
       }
       else if(key == 'n' || key == 'N') {
         sounds.nextSong()
-      } 
+      }
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
+      }
+      else if(key == 'e' || key == 'E') {
+        effects.muteAll()        
       } 
       if (gameState == 5 && key == '1') {
         gameState = 1
@@ -286,7 +286,10 @@ class Window extends PApplet {
     }
     
     //Go to victory screen if the player won
-    if(playerWon) {
+    if(playerWon) {   
+      sounds.pauseAll()
+      sounds.rewindAll()
+      sounds.playVictory()
       resetProgress()
       gameState = 6
     } 
@@ -414,11 +417,6 @@ class Window extends PApplet {
    
   private def victoryScreen = {
     clear()
-    sounds.pauseAll()
-    if(sounds.isPaused){
-    sounds.playVictory()
-    sounds.rewindAll()
-    }
     background(blurredBg)
     textSize(60)
     fill(0,0,0)

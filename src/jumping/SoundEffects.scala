@@ -8,6 +8,18 @@ class SoundEffects {
   private val effect2 = effect.loadFile("src/trumpEffects/out.wav")
   private val effect3 = effect.loadFile("src/trumpEffects/great_again.wav")
   
+  def muteAll() = {
+    if(effect1.isMuted&&effect2.isMuted&&effect3.isMuted){
+      effect1.unmute()
+      effect2.unmute()
+      effect3.unmute()
+    } else {
+    effect1.mute()
+    effect2.mute()
+    effect3.mute()
+    }
+  }
+  
   def play1() = effect1.play()
     
   def play2() = effect2.play()

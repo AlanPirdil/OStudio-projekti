@@ -23,6 +23,7 @@ class Music {
     song4.pause()
     wallSong.pause()
     victorySong.pause()
+    currentSong.pause()
   }
   
   def rewindAll() = {
