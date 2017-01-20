@@ -5,13 +5,12 @@ class Music {
 
   var music = new Minim(Window)
 
-  val song1 = music.loadFile("src/music/alone.wav")
-  val song2 = music.loadFile("src/music/eskimot.wav")
-  val song3 = music.loadFile("src/music/joystick.wav")
-  val song4 = music.loadFile("src/music/get_in.wav")
+  val song1 = music.loadFile("src/music/alone.mp3")
+  val song2 = music.loadFile("src/music/joystick.mp3")
+  val song3 = music.loadFile("src/music/get_in.mp3")
 
   val wallSong = music.loadFile("src/music/yep.mp3")
-  val victorySong = music.loadFile("src/music/mexico.wav")
+  val victorySong = music.loadFile("src/music/mexico.mp3")
 
 
   var currentSong = song1
@@ -22,14 +21,12 @@ class Music {
       song1.mute()
       song2.mute()
       song3.mute()
-      song4.mute()
       wallSong.mute()
       victorySong.mute()
     } else {
       song1.unmute()
       song2.unmute()
       song3.unmute()
-      song4.unmute()
       wallSong.unmute()
       victorySong.unmute()
     }
@@ -39,7 +36,6 @@ class Music {
     song1.pause()
     song2.pause()
     song3.pause()
-    song4.pause()
     wallSong.pause()
     victorySong.pause()
     currentSong.pause()
@@ -49,7 +45,6 @@ class Music {
     song1.rewind()
     song2.rewind()
     song3.rewind()
-    song4.rewind()
     wallSong.rewind()
     victorySong.rewind()
   }
@@ -65,11 +60,10 @@ class Music {
     currentSong.rewind()
     if(currentSong == song1) currentSong = song2
     else if(currentSong == song2) currentSong = song3
-    else if(currentSong == song3) currentSong = song4
-    else if(currentSong == song4) currentSong = song1
-    else if(currentSong == wallSong) currentSong = song1
+    else if(currentSong == song3) currentSong = wallSong
+    else if(currentSong == wallSong) currentSong = victorySong
     else if(currentSong == victorySong) currentSong = song1
-
+    
     currentSong.play()
   }
 
@@ -80,13 +74,13 @@ class Music {
   }
   
   def level2Music() = {
-      currentSong = song3
+      currentSong = song2
       currentSong.rewind()
       currentSong.play()
   }
 
   def level3Music() = {
-      currentSong = song4
+      currentSong = song3
       currentSong.rewind()
       currentSong.play()
   }
