@@ -73,8 +73,20 @@ class Music {
     currentSong.play()
   }
 
-  def gameMusic() = {
+  def level1Music() = {
       currentSong = wallSong
+      currentSong.rewind()
+      currentSong.play()
+  }
+  
+  def level2Music() = {
+      currentSong = song3
+      currentSong.rewind()
+      currentSong.play()
+  }
+  
+  def level3Music() = {
+      currentSong = song4
       currentSong.rewind()
       currentSong.play()
   }

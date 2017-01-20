@@ -230,7 +230,9 @@ class Window extends PApplet {
     if(pixelsGone == 0) {
       sounds.pauseAll()
       sounds.rewindAll()
-      sounds.gameMusic()
+      if(currentBgImg == bgImg1) sounds.level1Music()
+      else if(currentBgImg == bgImg2) sounds.level2Music()
+      else if(currentBgImg == bgImg3) sounds.level3Music()
     }
    
     pixelsGone += 4
