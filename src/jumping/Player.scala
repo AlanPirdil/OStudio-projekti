@@ -10,8 +10,8 @@ class Player {
   var vy = 0
   val height = 50
   val width = 30
-  
-  def jump() = {    
+
+  def jump() = {
     vy = min(vy+1, 20)   // jump
     this.yAxis = min(250,this.yAxis + vy) //Floor level
   }
