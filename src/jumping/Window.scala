@@ -444,16 +444,6 @@ class Window extends PApplet {
   //A window that will appear if the player wins the level
   private def victoryScreen = {
     clear()
-<<<<<<< HEAD
-=======
-    sounds.pauseAll()
-    
-      if(sounds.isPaused) {
-        sounds.playVictory()
-        sounds.rewindAll()
-      }
-    
->>>>>>> origin/master
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
