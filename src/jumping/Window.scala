@@ -131,8 +131,7 @@ class Window extends PApplet {
         sounds.nextSong()
       }
       else if(key == 's' || key == 'S') {
-        if(sounds.isPaused) sounds.musicPlay()
-        else sounds.pause()        
+        sounds.muteAll()       
       }
       else if(key == 'e' || key == 'E') {
         effects.muteAll()        

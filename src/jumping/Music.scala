@@ -16,6 +16,25 @@ class Music {
   
   var currentSong = song1
   
+  
+    def muteAll() = {
+    if(song1.isMuted){
+      song1.mute()
+      song2.mute()
+      song3.mute()
+      song4.mute()
+      wallSong.mute()
+      victorySong.mute()
+    } else {
+      song1.unmute()
+      song2.unmute()
+      song3.unmute()
+      song4.unmute()
+      wallSong.unmute()
+      victorySong.unmute()
+    }
+  }
+  
   def pauseAll() = {
     song1.pause()
     song2.pause()
