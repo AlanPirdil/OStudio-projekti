@@ -1,3 +1,8 @@
+
+  /* THIS IS A GAME MADE BY ALAN PIRDIL, MÄRT VESINURM AND AKSELI VÄYRYNEN
+   * AT AALTO UNIVERSITY. IN ORDER TO RUN THE GAME, RUN WINDOW.SCALA.
+   * HAVE FUN! */
+
 package jumping
 import scala.math._
 import processing.core._
@@ -13,25 +18,26 @@ object Window extends PApplet{
 }
 
 class Window extends PApplet {
-  //define the area measures
+  
+  //Define the area measures
   val areaWidth = 640
   val areaHeight = 320
   
-  //Starts from main menu
+  //Starts from mainMenu
   var gameState = 2
   def situation = this.gameState
   
-  //initialize sounds
+  //Initialize sounds
   val effects = new SoundEffects
   val sounds = new Music
   
-  //initialize font
+  //Initialize font
   private val usedFont = createFont("src/jumping/karma future.ttf", 32)
   
-  //initialize player
-  val playerIcon = new Player // Initiate a player
+  //Initialize player
+  val playerIcon = new Player
   
-  //loads all needed images
+  //Loading all the images needed in this game
   val bgImg1 = loadImage("src/photos/BG.png")
   val bgImg2 = loadImage("src/photos/level2BG.jpg")
   val bgImg3 = loadImage("src/photos/level3Bg.jpg")
@@ -54,12 +60,12 @@ class Window extends PApplet {
   val tryagain = loadImage("src/photos/againStatic.png")
   val mouseOnAgain = loadImage("src/photos/againHover.png")
   
-  //loads levelfiles
+  //Loading .csv levelfiles
   val level1 = Source.fromFile("src/jumping/level1.csv")
   val level2 = Source.fromFile("src/jumping/level2.csv")
   val level3 = Source.fromFile("src/jumping/level3.csv")
   
-  //initialize a buffer for obstacles
+  //Initialize a buffer for obstacles
   var firstObstacles = Buffer[Obstacle]()
   var secondObstacles = Buffer[Obstacle]()
   var thirdObstacles = Buffer[Obstacle]()
@@ -71,21 +77,22 @@ class Window extends PApplet {
   var currentLevel = 1
   var currentBgImg = bgImg1
 
+  //Reading the level from a .csv file
   private def readLevel(levelToRead: Source, obstacleBuffer: Buffer[Obstacle] ) = {
     try {
-      var rivinumero = 1
+      var rowNum = 1
       for (rivi <- levelToRead.getLines) {
         val arrayOfStrings = rivi.split(",")
         val arrayOfInts = arrayOfStrings.map(_.trim().toInt)
         val koko = arrayOfInts.size
-        for(i<- 0 until koko){
+        for(i <- 0 until koko){
           if(arrayOfInts(i) == 0){
-            obstacleBuffer += new Obstacle("wall", firstX + i*30,rivinumero*30 + 90,30,30)
+            obstacleBuffer += new Obstacle("wall", firstX + i * 30, rowNum*30 + 90,30,30)
         } else if(arrayOfInts(i) == 1){
-          obstacleBuffer += new Obstacle("spikes", firstX + i*30, rivinumero*30 + 90,30,30)
+          obstacleBuffer += new Obstacle("spikes", firstX + i * 30, rowNum*30 + 90,30,30)
         }
       }
-      rivinumero += 1
+      rowNum += 1
     }
  
   }      catch {
@@ -107,7 +114,8 @@ class Window extends PApplet {
      frameRate(60)
      frame.setTitle("Trumpoliini")
   }
-
+  
+  //Defining what happens in case of certain keys are pressed
   override def keyPressed() = {
     if(keyPressed) {
       if(key == 'p' || key == 'P') {
@@ -135,7 +143,7 @@ class Window extends PApplet {
     }
   }
   
-  //What happens when mouse is clicked
+  //Defining what happens when mouse is clicked
   override def mousePressed() = { 
     effects.rewind1()
     if (gameState == 1) {
@@ -146,47 +154,58 @@ class Window extends PApplet {
      playerIcon.vy = -15 // Makes Trump jump
     } 
     
-    //First level
+    
+    /* The following if statements define the view that will
+     * appear in case the player pushes a button w/ left click
+     * at certain gameStates. */  
+    
+    //Go to first level @levelSelect
     if (gameState == 5 && mouseX >= 85 && mouseX <= 185 && mouseY <= 245 && mouseY >= 145) {
       obstacles = firstObstacles
       currentBgImg = bgImg1
       gameState = 1
     }
     
-    //Second level
+    //Go to second level @levelSelect
     if (gameState == 5 && mouseX >= 270 && mouseX <= 370 && mouseY <= 245 && mouseY >= 145) {
        obstacles = secondObstacles
        currentBgImg = bgImg2
       gameState = 1  
     }
     
-    //Third level
+    //Go to third level @levelSelect
     if (gameState == 5 && mouseX >= 455 && mouseX <= 555 && mouseY <= 245 && mouseY >= 145) {
       obstacles = thirdObstacles
       currentBgImg = bgImg3
       gameState = 1
-    }
+    }   
     
-    
+    //Go to levelSelect @mainMenu
     if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
       gameState = 5
     }
     
+    //Go to helpScreen @mainMenu
     if (gameState == 2 && mouseX >= 360 && mouseX <= 560 && mouseY >= 150 && mouseY <= 250) {
       gameState = 3
     }
     
+    //Go back to mainMenu @ helpScreen
     if (gameState == 3 && mouseX >= 400 && mouseX <= 600 && mouseY >= 25 && mouseY <= 125) {
       gameState = 2
     }
     
+    //Go to gameScreen (try again) @endScreen
     if (gameState == 4 && mouseX >= 113 && mouseX <= 263 && mouseY >= 225 && mouseY <= 300) {
       gameState = 1
     }
     
+    //Go to back to mainMenu @endScreen
     if (gameState == 4 && mouseX >= 376 && mouseX <= 526 && mouseY >= 225 && mouseY <= 300) {
       gameState = 2
     }
+    
+    //Go back to to mainMenu @victoryScreen
     if (gameState == 6 && mouseX >= 400 && mouseX <= 550 && mouseY >= 230 && mouseY <= 305) {
       gameState = 2
     }
@@ -195,8 +214,7 @@ class Window extends PApplet {
   
   
   
-  //draw runs 60 time per second
- 
+  //Drawing different stages of the game. Runs 60 times per sec. 
   override def draw(): Unit = {
    if(gameState == 1) gameScreen
    else if(gameState == 2) mainMenu
@@ -215,6 +233,7 @@ class Window extends PApplet {
       sounds.rewindAll()
       sounds.gameMusic()
     }
+   
     pixelsGone += 4
     obstacles = obstacles.sortBy(_.x)
     var nextObstacle = obstacles(obsCount)
@@ -230,6 +249,7 @@ class Window extends PApplet {
     val lastOne = obstacles(obstacles.size - 1).x
     var progress = pixelsGone * 1.0 / lastOne * 1.0
     
+    //Informing the player about the progress & very basic instructions
     if (pixelsGone < 420) {
       textSize(32)
       text("Left click to jump", 200, 70)
@@ -246,7 +266,7 @@ class Window extends PApplet {
     playerIcon.jump()
     image(trumpImg, playerIcon.xAxis, playerIcon.yAxis, playerIcon.width, playerIcon.height)
 
-    // Draws the obstacles
+    //Draws the obstacles
     if (obstacles.size > 0) {
       for (thisObs <- obstacles) {
       if (thisObs.obsType == "wall") {
@@ -306,7 +326,6 @@ class Window extends PApplet {
 
     //Checks whether the player has collided into an obstacle
   private def gameEnds: Boolean = {
-  //  if(playerIcon.xAxis + playerIcon.width == obstacles(obsCount).x - pixelsGone && (playerIcon.yAxis + playerIcon.height >= obstacles(obsCount).y)) {
    if(obstacles.exists( ob => playerIcon.xAxis + playerIcon.width == ob.x - pixelsGone && playerIcon.yAxis + playerIcon.height - 10 > ob.y)) {
      effects.play2()
      effects.rewind2()
@@ -316,7 +335,7 @@ class Window extends PApplet {
     }
   }
   
-    //Resets the progress so a level can be played again without closing the window
+   //Resets the progress so a level can be played again without closing the window
   def resetProgress() = {
     pixelsGone = 0
     obsCount = 0
@@ -336,6 +355,7 @@ class Window extends PApplet {
     image(level2Logo, 270, 145, 100, 100)
     image(level3Logo, 455, 145, 100, 100)   
     
+    //Changing between Static/Hover buttons
     if (gameState == 5 && mouseX >= 85 && mouseX <= 185 && mouseY <= 245 && mouseY >= 145) {
       image(mouseOnLvl1, 85, 145, 100, 100)
     }
@@ -350,6 +370,7 @@ class Window extends PApplet {
     
   }
    
+  //A view which includes information of the controls/keys in this program
   private def helpScreen = {
     clear()
     background(blurredBg)
@@ -362,11 +383,13 @@ class Window extends PApplet {
     text(helperText, 100, 150)
     image(back, 400, 25, 200, 100)
     
+  //Changing between Static and Hover buttons
     if (gameState == 3 && mouseX >= 400 && mouseX <= 600 && mouseY >= 25 && mouseY <= 125) {
       image(mouseOnBack, 400, 25, 200, 100)
     }
   }
   
+  //1st thing that will appear in the game
   private def mainMenu = {
     loop()
     clear()
@@ -378,6 +401,7 @@ class Window extends PApplet {
     image(playbutton, 80, 150, 200, 100)
     image(helpbutton, 360, 150, 200, 100)
     
+    //Changing between Static/Hover buttons
     if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
       image(mouseOnPlaybutton, 80, 150, 200, 100)
     }
@@ -388,6 +412,7 @@ class Window extends PApplet {
     
   }
   
+  //A screen that will appear in case the player loses the game
     private def endScreen = {
     clear()
     sounds.pauseAll()
@@ -404,6 +429,7 @@ class Window extends PApplet {
     image(tryagain, 113, 225, 150, 75)
     image(back, 376, 225, 150, 75)
     
+    //Changing between Static/Hover buttons
     if (gameState == 4 && mouseX >= 113 && mouseX <= 263 && mouseY >= 225 && mouseY <= 300) {
       image(mouseOnAgain, 113, 225, 150, 75)
     }
@@ -414,20 +440,32 @@ class Window extends PApplet {
        
     
   }
-   
+  
+  //A window that will appear if the player wins the level
   private def victoryScreen = {
     clear()
+<<<<<<< HEAD
+=======
+    sounds.pauseAll()
+    
+      if(sounds.isPaused) {
+        sounds.playVictory()
+        sounds.rewindAll()
+      }
+    
+>>>>>>> origin/master
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
     textFont(usedFont, 64)
     text("VICTORY", 100, 75)
     textFont(usedFont, 32)
-    val congratulations = "Hooray!\nYou made it to Mexico, congratulations!\nHillary can't catch you when you're here.\nThis means you are safe...\nOR ARE YOU???"
+    val congratulations = "Hooray!\nYou made it to Mexico, congratulations!\nHillary can't catch you when you're here.\nThis means you are safe...\nOR ARE YOU???"   
     textSize(20)
-    text(congratulations, 100, 125)
-    
+    text(congratulations, 100, 125)    
     image(back, 400, 230, 150, 75)
+    
+    //Changing between Static/Hover buttons
     if (gameState == 6 && mouseX >= 400 && mouseX <= 550 && mouseY >= 230 && mouseY <= 305) {
       image(mouseOnBack, 400, 230, 150, 75)
     }
