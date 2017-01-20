@@ -25,4 +25,5 @@ class SoundEffects {
   def rewind2() = effect2.rewind()
   
   def rewind3() = effect3.rewind()
+  
 }
