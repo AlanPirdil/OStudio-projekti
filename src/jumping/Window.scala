@@ -81,27 +81,26 @@ class Window extends PApplet {
   private def readLevel(levelToRead: Source, obstacleBuffer: Buffer[Obstacle] ) = {
     try {
       var rowNum = 1
-      for (rivi <- levelToRead.getLines) {
-        val arrayOfStrings = rivi.split(",")
+      for (row <- levelToRead.getLines) {
+        val arrayOfStrings = row.split(",")
         val arrayOfInts = arrayOfStrings.map(_.trim().toInt)
         val arraySize = arrayOfInts.size
         for(i <- 0 until arraySize){
           if(arrayOfInts(i) == 0){
             obstacleBuffer += new Obstacle("wall", firstX + i * 30, rowNum*30 + 90,30,30)
-        } else if(arrayOfInts(i) == 1){
+          } else if(arrayOfInts(i) == 1){
           obstacleBuffer += new Obstacle("spikes", firstX + i * 30, rowNum*30 + 90,30,30)
+          }
         }
-      }
       rowNum += 1
-    }
- 
-  }      catch {
+      }  
+    } catch {
         case e: Exception => "ERROR" 
       }
     finally {
     levelToRead.close()
+    }
   }
- }
   
   //Main setup
   override def setup(): Unit = {
