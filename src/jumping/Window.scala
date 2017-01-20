@@ -13,7 +13,7 @@ object Window extends PApplet{
 }
 
 class Window extends PApplet {
-  // define the area measures
+  //define the area measures
   val areaWidth = 640
   val areaHeight = 320
   
@@ -21,11 +21,14 @@ class Window extends PApplet {
   var gameState = 2
   def situation = this.gameState
   
-  //initialise sounds
+  //initialize sounds
   val effects = new SoundEffects
   val sounds = new Music
   
-  //initialise player
+  //initialize font
+  private val usedFont = createFont("src/jumping/karma future.ttf", 32)
+  
+  //initialize player
   val playerIcon = new Player // Initiate a player
   
   //loads all needed images
@@ -46,7 +49,7 @@ class Window extends PApplet {
   val wallImgTest = loadImage("src/photos/wall.png")
   val spikes = loadImage("src/photos/spikes.png")
   val trumpImg = loadImage(playerIcon.img)
-  val back = loadImage("src/photos/backStatic.png")
+  val back = loadImage("src/photos/backStatic(1).png")
   val mouseOnBack = loadImage("src/photos/backHover.png")
   val tryagain = loadImage("src/photos/againStatic.png")
   val mouseOnAgain = loadImage("src/photos/againHover.png")
@@ -56,7 +59,7 @@ class Window extends PApplet {
   val level2 = Source.fromFile("src/jumping/level2.csv")
   val level3 = Source.fromFile("src/jumping/level3.csv")
   
-  //initialise a buffer for obstacles
+  //initialize a buffer for obstacles
   var firstObstacles = Buffer[Obstacle]()
   var secondObstacles = Buffer[Obstacle]()
   var thirdObstacles = Buffer[Obstacle]()
@@ -125,7 +128,7 @@ class Window extends PApplet {
       else if(key == 's' || key == 'S') {
         if(sounds.isPaused) sounds.musicPlay()
         else sounds.pause()        
-      }
+      } 
       if (gameState == 5 && key == '1') {
         gameState = 1
       }
@@ -163,6 +166,8 @@ class Window extends PApplet {
       currentBgImg = bgImg3
       gameState = 1
     }
+    
+    
     if (gameState == 2 && mouseX >= 80 && mouseX <= 280 && mouseY >= 150 && mouseY <= 250) {
       gameState = 5
     }
@@ -218,7 +223,7 @@ class Window extends PApplet {
     image(currentBgImg, screenSpeed + areaWidth, 0)
     screenSpeed -= 2
     if(abs(screenSpeed) > areaWidth) screenSpeed= 0
-    
+    textFont(usedFont, 32)
     textSize(20)
     fill(0, 0, 0)
     val lastOne = obstacles(obstacles.size - 1).x
@@ -310,7 +315,8 @@ class Window extends PApplet {
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
-    text("Level select", 100, 75)
+    textFont(usedFont, 64)
+    text("Level select", 125, 100)
 
     
     image(level1Logo, 85, 145, 100, 100)
@@ -337,7 +343,7 @@ class Window extends PApplet {
     textSize(60)
     fill(0,0,0)
     text("Help", 100, 100)
-    
+    textFont(usedFont, 32)
     val helperText = "Left click to jump\nPress m to go to the main menu\nPress n to switch background music\nPress s to mute the soundtrack\nPress e to mute sound effects"
     textSize(20)
     text(helperText, 100, 150)
@@ -354,8 +360,8 @@ class Window extends PApplet {
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
-    text("Trumpoliini", 100, 100)
-    
+    textFont(usedFont, 64)
+    text("Trumpoliini", 150, 100)
     image(playbutton, 80, 150, 200, 100)
     image(helpbutton, 360, 150, 200, 100)
     
@@ -366,6 +372,7 @@ class Window extends PApplet {
     if (gameState == 2 && mouseX >= 360 && mouseX <= 560 && mouseY >= 150 && mouseY <= 250) {
       image(mouseOnHelpbutton, 360, 150, 200, 100)
     } 
+    
   }
   
     private def endScreen = {
@@ -373,12 +380,13 @@ class Window extends PApplet {
     sounds.pauseAll()
     background(blurredBg)
     textSize(60)
-    fill(0,0,0)
-    text("GAME OVER", 100, 100)
-    
-    val deathDeclaration = "You didn't survive to Mexico.\nCrooked Hillary put you in jail but Soon(tm)\nyou will get your revenge."
+    fill(0,0,0)  
+    textFont(usedFont, 64)
+    text("GAME OVER", 150, 75)
+    textFont(usedFont, 32)
+    val deathDeclaration = "You didn't survive to Mexico.\nCrooked Hillary put you in jail but soon\nyou will get your revenge."
     textSize(20)
-    text(deathDeclaration, 80, 150)
+    text(deathDeclaration, 150, 125)
     
     image(tryagain, 113, 225, 150, 75)
     image(back, 376, 225, 150, 75)
@@ -404,11 +412,12 @@ class Window extends PApplet {
     background(blurredBg)
     textSize(60)
     fill(0,0,0)
-    text("VICTORY", 100, 100)
-    
+    textFont(usedFont, 64)
+    text("VICTORY", 100, 75)
+    textFont(usedFont, 32)
     val congratulations = "Hooray!\nYou made it to Mexico, congratulations!\nHillary can't catch you when you're here.\nThis means you are safe...\nOR ARE YOU???"
     textSize(20)
-    text(congratulations, 100, 150)
+    text(congratulations, 100, 125)
     
     image(back, 400, 230, 150, 75)
     if (gameState == 6 && mouseX >= 400 && mouseX <= 550 && mouseY >= 230 && mouseY <= 305) {
