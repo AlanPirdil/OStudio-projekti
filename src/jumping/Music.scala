@@ -18,17 +18,17 @@ class Music {
 
     def muteAll() = {
     if(song1.isMuted){
-      song1.mute()
-      song2.mute()
-      song3.mute()
-      wallSong.mute()
-      victorySong.mute()
-    } else {
       song1.unmute()
       song2.unmute()
       song3.unmute()
       wallSong.unmute()
       victorySong.unmute()
+    } else {
+      song1.mute()
+      song2.mute()
+      song3.mute()
+      wallSong.mute()
+      victorySong.mute()
     }
   }
 
